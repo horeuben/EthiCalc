@@ -8,8 +8,8 @@ public class Shop {
     private String shopname;
     private String description;
     private String picureurl;
-    public String lat;
-    public String lng;
+    private String lat;
+    private String lng;
 
     public String getLat() {
         return lat;
