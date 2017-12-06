@@ -1,11 +1,23 @@
-package reuben.ethicalc;
+package reuben.ethicalc.Activity;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,16 +33,27 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import reuben.ethicalc.Fragment.BlankFragment;
+import reuben.ethicalc.R;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
     private ImageView imageViewProfilePic;
     private TextView textViewName, textViewEmail;
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,18 +83,20 @@ public class MainActivity extends AppCompatActivity
         textViewName = (TextView) naviheaderview.findViewById(R.id.textViewName);
         textViewEmail = (TextView) naviheaderview.findViewById(R.id.textViewEmail);
 
-        AsyncTask.execute(new Runnable() {
+        Picasso.with(this).load(user.getPhotoUrl()).into(imageViewProfilePic, new Callback() {
             @Override
-            public void run() {
-                try {
-                    InputStream image_stream = getContentResolver().openInputStream(user.getPhotoUrl());
-                    imageViewProfilePic.setImageBitmap(BitmapFactory.decodeStream(image_stream ));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onSuccess() {
+                Bitmap imageBitmap = ((BitmapDrawable) imageViewProfilePic.getDrawable()).getBitmap();
+                RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                imageDrawable.setCircular(true);
+                imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                imageViewProfilePic.setImageDrawable(imageDrawable);
+            }
+            @Override
+            public void onError() {
+                imageViewProfilePic.setImageResource(R.drawable.ic_launcher_foreground);
             }
         });
-
 
         textViewName.setText(user.getDisplayName());
         textViewEmail.setText(user.getEmail());
@@ -109,14 +134,17 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = null;
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            fragment = new BlankFragment();
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -129,8 +157,36 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        if(fragment!=null){
+            transaction.replace(R.id.fragment_container,fragment);
+
+            transaction.commit();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //convert image into circle
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
     }
 }

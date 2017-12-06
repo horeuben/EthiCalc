@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="reuben.ethicalc.MainActivity2">
+    tools:context="reuben.ethicalc.Activity.MainActivity2">
 
     <TextView
         android:layout_width="wrap_content"
