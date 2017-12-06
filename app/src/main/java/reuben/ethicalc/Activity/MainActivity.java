@@ -50,7 +50,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
-    private ImageView imageViewProfilePic;
+    private ImageView imageViewProfilePic, imageViewStarIcon;
     private TextView textViewName, textViewEmail;
 
     @Override
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View naviheaderview = navigationView.getHeaderView(0);
         imageViewProfilePic = (ImageView)naviheaderview.findViewById(R.id.imageViewProfilePic);
+        imageViewStarIcon = (ImageView)naviheaderview.findViewById(R.id.imageViewStarIcon);
         textViewName = (TextView) naviheaderview.findViewById(R.id.textViewName);
         textViewEmail = (TextView) naviheaderview.findViewById(R.id.textViewEmail);
 
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         textViewName.setText(user.getDisplayName());
         textViewEmail.setText(user.getEmail());
+        imageViewStarIcon.setImageResource(R.drawable.ic_grade_black_24dp);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
