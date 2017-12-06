@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "702662597541",
+    "firebase_url": "https://fir-ethicalc.firebaseio.com",
+    "project_id": "firebase-ethicalc",
+    "storage_bucket": "firebase-ethicalc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702662597541:android:1b4ee357164eeb4a",
+        "android_client_info": {
+          "package_name": "reuben.ethicalc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702662597541-fddcqlb8bg21l5erlvi36bh4ob4hq2i9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "reuben.ethicalc",
+            "certificate_hash": "b1e88ec7606b2431e53046705b2b207c7a5ac21f"
+          }
+        },
+        {
+          "client_id": "702662597541-ao6kn3clgoa0qn6oi3gblitn7igrg30k.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "702662597541-3e0jr046seclr217lki0cvigl1pl3c5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "reuben.ethicalc",
+            "certificate_hash": "4602de6e8c7cb19b72c8ca298924cdf7f3bb0132"
+          }
+        },
+        {
+          "client_id": "702662597541-2fie6hnhfbj4n333v0dq5htij1mfap70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgPb6gma66wv1GGybIQSi4Y-pztFwRIGs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702662597541-ao6kn3clgoa0qn6oi3gblitn7igrg30k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702662597541:android:39cbaa9dfd94f8ad",
+        "android_client_info": {
+          "package_name": "com.example.linweili.databasehelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702662597541-3vjg3ig2vn9b7c1r5u20ntmksgttheni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.linweili.databasehelper",
+            "certificate_hash": "b1e88ec7606b2431e53046705b2b207c7a5ac21f"
+          }
+        },
+        {
+          "client_id": "702662597541-ao6kn3clgoa0qn6oi3gblitn7igrg30k.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "702662597541-2fie6hnhfbj4n333v0dq5htij1mfap70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgPb6gma66wv1GGybIQSi4Y-pztFwRIGs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702662597541-ao6kn3clgoa0qn6oi3gblitn7igrg30k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
