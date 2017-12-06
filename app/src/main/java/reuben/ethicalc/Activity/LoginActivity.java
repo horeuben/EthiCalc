@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             // Choose authentication providers
             List<AuthUI.IdpConfig> providers = Arrays.asList(
                     new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                    new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                  //  new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),         google smart lock problem
                     new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build());
 
 // Create and launch sign-in intent
@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 // Sign in failed, check response for error code
                 Toast.makeText(this,"Invalid login credentials",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                finish();
             }
         }
     }

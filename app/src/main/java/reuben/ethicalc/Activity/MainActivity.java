@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity
                 //scan content is the number on the barcode--> use this number to get information about copmany
 
                 //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
+
+                //once get, throw it to another activity to display company info
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
