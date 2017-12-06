@@ -5,9 +5,34 @@ package reuben.ethicalc.Database;
  */
 
 public class Shop {
-    public String shopname;
-    public String description;
-    public String picureurl;
+    private String shopname;
+    private String description;
+    private String picureurl;
+
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPicureurl() {
+        return picureurl;
+    }
+
+    public void setPicureurl(String picureurl) {
+        this.picureurl = picureurl;
+    }
+
     public Shop() {
 
     }
