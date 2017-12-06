@@ -1,5 +1,6 @@
 package reuben.ethicalc.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -31,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Callback;
@@ -42,6 +44,8 @@ import java.io.InputStream;
 
 import reuben.ethicalc.Fragment.BlankFragment;
 import reuben.ethicalc.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
@@ -61,14 +65,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         user = FirebaseAuth.getInstance().getCurrentUser();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,6 +96,39 @@ public class MainActivity extends AppCompatActivity
 
         textViewName.setText(user.getDisplayName());
         textViewEmail.setText(user.getEmail());
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+                scanIntegrator.setOrientationLocked(false);
+                scanIntegrator.initiateScan();
+
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        if(requestCode == IntentIntegrator.REQUEST_CODE) {
+            //retrieve scan result
+            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+            // if there actually is a result from the scannig activity
+            if (scanningResult != null) {
+                String scanContent = scanningResult.getContents();
+                String scanFormat = scanningResult.getFormatName();
+
+                //different kinds of barcodes: EAN13, EAN_8, UPC_12
+                //scan content is the number on the barcode--> use this number to get information about copmany
+
+                //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
     }
 
     @Override
@@ -141,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
             fragment = new BlankFragment();
 
