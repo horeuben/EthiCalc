@@ -10,4 +10,5 @@
     <color name="material_green_a200">#69F0AE</color>
     <color name="material_pink_a200">#ff4081</color>
     <color name="material_purple_a700">#009a9a</color>
+    <color name="button_gradient_start">#a0c090</color>
 </resources>

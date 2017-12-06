@@ -32,12 +32,15 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
+        android:layout_margin="15dp"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
         android:id="@+id/fab_scanbarcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:text="@string/read_barcode"
+        android:textColor="#ffff"
+        android:background="@drawable/fab"
+        android:layout_gravity="center|bottom" />
+
 
 </android.support.design.widget.CoordinatorLayout>

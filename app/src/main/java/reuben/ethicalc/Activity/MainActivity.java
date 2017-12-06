@@ -28,6 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         textViewName.setText(user.getDisplayName());
         textViewEmail.setText(user.getEmail());
         imageViewStarIcon.setImageResource(R.drawable.ic_grade_black_24dp);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
+        Button fab = (Button) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
