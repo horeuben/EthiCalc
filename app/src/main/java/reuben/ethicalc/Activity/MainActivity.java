@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
-    private TextView textViewName, textViewEmail;
+    private TextView textViewName;
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity
         imageViewProfilePic = (ImageView)naviheaderview.findViewById(R.id.imageViewProfilePic);
         imageViewStarIcon = (ImageView)naviheaderview.findViewById(R.id.imageViewStarIcon);
         textViewName = (TextView) naviheaderview.findViewById(R.id.textViewName);
-        textViewEmail = (TextView) naviheaderview.findViewById(R.id.textViewEmail);
 
         Picasso.with(this).load(user.getPhotoUrl()).into(imageViewProfilePic, new Callback() {
             @Override
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity
         });
 
         textViewName.setText(user.getDisplayName());
-        textViewEmail.setText(user.getEmail());
         imageViewStarIcon.setImageResource(R.drawable.ic_grade_black_24dp);
         Button fab = (Button) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -180,15 +178,13 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             fragment = new BlankFragment();
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_database) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_barcode) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_impact) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
