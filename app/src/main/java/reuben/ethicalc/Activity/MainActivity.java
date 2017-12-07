@@ -28,6 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
-    private ImageView imageViewProfilePic;
+    private ImageView imageViewProfilePic, imageViewStarIcon;
     private TextView textViewName, textViewEmail;
 
     @Override
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View naviheaderview = navigationView.getHeaderView(0);
         imageViewProfilePic = (ImageView)naviheaderview.findViewById(R.id.imageViewProfilePic);
+        imageViewStarIcon = (ImageView)naviheaderview.findViewById(R.id.imageViewStarIcon);
         textViewName = (TextView) naviheaderview.findViewById(R.id.textViewName);
         textViewEmail = (TextView) naviheaderview.findViewById(R.id.textViewEmail);
 
@@ -96,7 +99,8 @@ public class MainActivity extends AppCompatActivity
 
         textViewName.setText(user.getDisplayName());
         textViewEmail.setText(user.getEmail());
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_scanbarcode);
+        imageViewStarIcon.setImageResource(R.drawable.ic_grade_black_24dp);
+        Button fab = (Button) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

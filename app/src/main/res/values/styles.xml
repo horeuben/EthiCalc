@@ -5,7 +5,22 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#ffff</item>
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    </style>
+
+    <style name="GreenTheme" parent="FirebaseUI">
+        <!-- Required for sign-in flow styling -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/material_purple_a700</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="editTextColor">#ffff</item>
+        <item name="android:editTextColor">#ffff</item>
+        <item name="android:textColorHint">@color/material_purple_a700</item>
+        <item name="colorControlNormal">@color/material_green_500</item>
+        <item name="colorControlActivated">@color/material_pink_a200</item>
+        <item name="android:windowBackground">@drawable/selector_background</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
