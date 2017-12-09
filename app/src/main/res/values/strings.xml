@@ -30,4 +30,6 @@
     <string name="nav_email">Email Address Here</string>
     <string name="nav_name">Name Here</string>
     <string name="nav_impact_factor_val">Impact Factor Value</string>
+    <!--For Geofence-->
+    <string name="geokey">Geofence</string>
 </resources>
