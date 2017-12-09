@@ -38,13 +38,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import reuben.ethicalc.Fragment.BlankFragment;
-import reuben.ethicalc.Fragment.Get_Nearby_Shops_Fragment;
+import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,Get_Nearby_Shops_Fragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
 
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_impact) {
 
         } else if (id == R.id.nav_share) {
-            fragment = new Get_Nearby_Shops_Fragment();
+            fragment = new GetNearbyShopsFragment();
         }
 
         if(fragment!=null){

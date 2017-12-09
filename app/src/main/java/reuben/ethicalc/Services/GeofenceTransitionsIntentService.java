@@ -14,7 +14,7 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
-import reuben.ethicalc.Fragment.Get_Nearby_Shops_Fragment;
+import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.R;
 
 public class GeofenceTransitionsIntentService extends IntentService {
@@ -62,7 +62,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // 2. Create a PendingIntent for AllGeofencesActivity
-        Intent intent = new Intent(this, Get_Nearby_Shops_Fragment.class);
+        Intent intent = new Intent(this, GetNearbyShopsFragment.class);
         //intent.putExtra(MainActivity2.KEY,message);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

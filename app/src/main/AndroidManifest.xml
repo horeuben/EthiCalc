@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
+    <uses-permission android:name="android.permission.MANAGE_USERS" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Activity.MainActivity2" />
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
@@ -23,8 +26,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
 
+        </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider927685867400957"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true">
+        </provider>
         <service
             android:name=".Services.GeofenceTransitionsIntentService"
             android:exported="true" />

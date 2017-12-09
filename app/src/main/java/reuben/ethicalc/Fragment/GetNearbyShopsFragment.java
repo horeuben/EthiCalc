@@ -43,12 +43,12 @@ import reuben.ethicalc.Services.GeofenceTransitionsIntentService;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Get_Nearby_Shops_Fragment.OnFragmentInteractionListener} interface
+ * {@link GetNearbyShopsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Get_Nearby_Shops_Fragment#newInstance} factory method to
+ * Use the {@link GetNearbyShopsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Get_Nearby_Shops_Fragment extends Fragment implements LocationListener{
+public class GetNearbyShopsFragment extends Fragment implements LocationListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +71,7 @@ public class Get_Nearby_Shops_Fragment extends Fragment implements LocationListe
     private RecyclerView recyclerView;
     private ShopAdapter mshopAdapter;
     Location mylocation;
-    public Get_Nearby_Shops_Fragment() {
+    public GetNearbyShopsFragment() {
         // Required empty public constructor
     }
 
@@ -84,8 +84,8 @@ public class Get_Nearby_Shops_Fragment extends Fragment implements LocationListe
      * @return A new instance of fragment Get_Nearby_Shops_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Get_Nearby_Shops_Fragment newInstance(String param1, String param2) {
-        Get_Nearby_Shops_Fragment fragment = new Get_Nearby_Shops_Fragment();
+    public static GetNearbyShopsFragment newInstance(String param1, String param2) {
+        GetNearbyShopsFragment fragment = new GetNearbyShopsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -108,7 +108,7 @@ public class Get_Nearby_Shops_Fragment extends Fragment implements LocationListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview =  inflater.inflate(R.layout.activity_recycler, container, false);
+        View rootview =  inflater.inflate(R.layout.recycler_view, container, false);
         mGeofenceList = new ArrayList<Geofence>();
 
         int resp = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
