@@ -19,34 +19,34 @@ public class FirebaseDbhelper {
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mShopsDatabaseReference;
     private DatabaseReference mCompaniesDatabaseReference;
-    private ArrayList<Shop> shops;
-    private ArrayList<Company> companies;
+    //private ArrayList<Company> companies;
     private Shop shop;
     private Company company;
 
-    public FirebaseDbhelper(){
-        mFireBaseDatabase = FirebaseDatabase.getInstance();
+    public FirebaseDbhelper(FirebaseDatabase firebaseDatabase){
+        mFireBaseDatabase = firebaseDatabase;
         mShopsDatabaseReference = mFireBaseDatabase.getReference().child("shops");
         mCompaniesDatabaseReference = mFireBaseDatabase.getReference().child("companies");
 
     }
     public ArrayList<Shop> getShops(){
-        shops = new ArrayList<>();
+        final ArrayList<Shop> shops = new ArrayList<>();
         mShopsDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.e("linwei",dataSnapshot.toString());
+                Log.i("checking",String.valueOf(dataSnapshot.getChildrenCount()));
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Shop shop = data.getValue(Shop.class);
                     shops.add(shop);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
+        Log.i("after the for",String.valueOf(shops.size()));
         return shops;
     }
 
