@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -57,7 +58,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private SwipeRefreshLayout swipelayout;
     private OnFragmentInteractionListener mListener;
     public static final String KEY = "Geofence";
     PendingIntent mGeofencePendingIntent;
@@ -110,6 +111,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         // Inflate the layout for this fragment
         View rootview =  inflater.inflate(R.layout.recycler_view, container, false);
         mGeofenceList = new ArrayList<Geofence>();
+        swipelayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiperefresh);
 
         int resp = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (resp == ConnectionResult.SUCCESS) {
