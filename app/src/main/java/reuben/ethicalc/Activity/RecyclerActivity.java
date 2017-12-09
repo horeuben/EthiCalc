@@ -124,7 +124,6 @@ public class RecyclerActivity extends AppCompatActivity {
         Allshops.add(gomgom);
         */
 
-
     }
 
     public ArrayList<ShopClass> updateData(Bitmap...bitmaps){

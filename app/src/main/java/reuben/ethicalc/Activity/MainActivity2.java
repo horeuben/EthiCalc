@@ -121,8 +121,8 @@ public class MainActivity2 extends AppCompatActivity  implements LocationListene
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(1*100)        // 100 milliseconds
-                .setFastestInterval(1*100); // 100 milliseconds
+                .setInterval(1*1000)        // 100 milliseconds
+                .setFastestInterval(1*1000); // 100 milliseconds
 
     }
     @Override
@@ -241,11 +241,26 @@ public class MainActivity2 extends AppCompatActivity  implements LocationListene
         Log.i(TAG, "onLocationChanged");
         //Toast.makeText(this, "location changed!", Toast.LENGTH_SHORT).show();
     }
-    public void getcurrent(View view){
+    public void getcurrent(View view) {
+        try {
+            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+            if (location == null) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity2.this);
+            } else {
+                //If everything went fine lets get latitude and longitude
+                currentLatitude = location.getLatitude();
+                currentLongitude = location.getLongitude();
+            }
         Intent todis = new Intent(this, RecyclerActivity.class);
-        Log.i(TAG,currentLatitude+"lng"+currentLongitude);
-        todis.putExtra(KEY,currentLatitude+":"+currentLongitude);
+        Log.i(TAG, currentLatitude + "lng" + currentLongitude);
+        todis.putExtra(KEY, currentLatitude + ":" + currentLongitude);
         startActivity(todis);
+        }
+        catch(SecurityException e){
+            e.printStackTrace();
+        }
+
     }
 
 
