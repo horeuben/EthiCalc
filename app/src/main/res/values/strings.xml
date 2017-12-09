@@ -30,4 +30,18 @@
     <string name="nav_email">Email Address Here</string>
     <string name="nav_name">Name Here</string>
     <string name="nav_impact_factor_val">Impact Factor Value</string>
+    
+    <!-- For Impact Fragment -->
+    <string name="impact_hi">Hi,&#160;</string>
+    <string name="impact_hi2">.</string>
+    <string name="impact_name">Name Here</string>
+    <string name="impact_intro">Here\'s a look at your contributions to a better world so far.</string>
+    <string name="impact_impactfactor">Impact Factor</string>
+    <string name="impact_impactfactor2">This is a measure of how ethical your purchases have been.</string>
+    <string name="impact_share">SHARE</string>
+    <string name="impact_impactchange">Change in Impact Factor</string>
+    <string name="impact_impactchange2">Here\'s a history of how much your impact factor has changed. This week, your impact factor shifted by&#160;</string>
+    <string name="impact_impactchangevalue">+5.35</string>
+    <string name="impact_impactequiv">Your Impact in Real Terms</string>
+    <string name="impact_impactequiv2">But what does your impact factor mean? Here are some real-world equivalents...</string>
 </resources>

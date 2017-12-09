@@ -46,6 +46,8 @@
             android:layout_height="19dp"
             android:text="@string/nav_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/imageViewProfilePic" />
 
