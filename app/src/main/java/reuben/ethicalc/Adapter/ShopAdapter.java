@@ -17,16 +17,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import reuben.ethicalc.Activity.RecyclerActivity;
 import reuben.ethicalc.Activity.Shop_infomation;
 
 import reuben.ethicalc.Database.ShopClass;
 import reuben.ethicalc.R;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder> {
-
-    //    private RecyclerActivity.ShopClass[] data;
     private ArrayList<ShopClass> data;
     private static int viewHolderCount = 0;
     Context parentContext;
@@ -88,13 +84,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
 
             String shopName = data.get(position).getName();
             double dist = data.get(position).getDistance();
-            //Bitmap pic = ((BitmapDrawable) shopImageView.getDrawable()).getBitmap();;
 
-            //get the widgets
-            //if (pic != null){
-            //    shopImageView.setImageBitmap(pic);
-            //}
-            //attach data to widgets
             shopTextView.setText(shopName+"   "+dist);
 
         }
@@ -114,10 +104,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
             intent.putExtra("shop", arrayList);
             parentContext.startActivity(intent);
         }
-    }
-
-    public void imageReady(Bitmap[] foodPic){
-
     }
 
 
