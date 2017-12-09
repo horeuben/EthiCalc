@@ -24,4 +24,10 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+
+    <!-- For NavHeader -->
+    <string name="nav_impact_factor">Impact Factor</string>
+    <string name="nav_email">Email Address Here</string>
+    <string name="nav_name">Name Here</string>
+    <string name="nav_impact_factor_val">Impact Factor Value</string>
 </resources>
