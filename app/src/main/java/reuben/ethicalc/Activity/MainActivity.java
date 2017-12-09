@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity
                 //scan content is the number on the barcode--> use this number to get information about copmany
 
                 //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
-
+                Toast.makeText(getApplicationContext(), "Go to dummy info activity", Toast.LENGTH_SHORT).show();
+                Intent dummy = new Intent(this, ItemInfoActivity.class);
+                startActivity(dummy);
                 //once get, throw it to another activity to display company info
             } else {
                 Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
@@ -172,6 +174,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -185,6 +188,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Go to cart activity", Toast.LENGTH_SHORT).show();
+            Intent dummy = new Intent(this, CartActivity.class);
+            startActivity(dummy);
             return true;
         }
 
@@ -207,6 +213,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_barcode) {
 
         } else if (id == R.id.nav_impact) {
+            fragment = new BlankFragment();
 
         } else if (id == R.id.nav_share) {
             fragment = new GetNearbyShopsFragment();
@@ -243,5 +250,38 @@ public class MainActivity extends AppCompatActivity
         //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
         //return _bmp;
         return output;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Intent intent = getIntent();
+        String fragment = "";
+        if (intent.getExtras() != null){
+            fragment = intent.getExtras().getString("fragment");
+            intent.removeExtra("fragment");
+        }
+
+        if(intent !=null) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+            switch(fragment){
+
+                default:
+                    //change to different fragments
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                    onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                    break;
+                case "Impactfragment":
+                    //go to impact fragment;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
+                    navigationView.getMenu().getItem(3).setChecked(true);
+                    onNavigationItemSelected(navigationView.getMenu().getItem(3));
+                    break;
+            }
+        }
+
     }
 }
