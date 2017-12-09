@@ -19,10 +19,6 @@ public class Shop_infomation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_infomation);
         shopArray = (ArrayList<String>) getIntent().getSerializableExtra("shop");
-        //String[] imageUrlStrings= (String[]) getIntent().getSerializableExtra("IMAGEURL");
-        /*URL[] imageUrls = RecyclerActivity.convertStringToUrl(imageUrlStrings);
-        GetImageTaskSpecific getImageTaskSpecific = new GetImageTaskSpecific();
-        getImageTaskSpecific.execute(imageUrls);*/
         shopname = (TextView)findViewById(R.id.shopname);
         shopdis = (TextView)findViewById(R.id.shopDiscription);
         shopname.setText(shopArray.get(0));
