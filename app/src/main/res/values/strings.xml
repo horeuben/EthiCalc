@@ -147,4 +147,18 @@
     <string name="impact_equivwastevalue">32</string>
     <string name="impact_equivwasteintro">Kgs of waste prevented</string>
     <string name="impact_keepitup">Keep up the good work!</string>
+    
+    <!-- For Business Fragment -->
+    <string name="business_name">Singapore Telecommunications Limited</string>
+    <string name="business_type">Telecommunications</string>
+    <string name="business_CSR">Normalized CSR Rating</string>
+    <string name="business_CSRintro">CSR, or Corporate Social Responsibility, is a measure of how much effort a business puts into using responsible and sustainable business practices. This rating is aggregated and normalized from 512+ data sources. The overall CSR rating is comprised of 4 sub-ratings:</string>
+    <string name="business_environment">Environment</string>
+    <string name="business_environmentintro">The Environment rating covers the company\'s interactions with the environment at large, including use of natural resources, and its impact on Earth\'s ecosystems.</string>
+    <string name="business_community">Community</string>
+    <string name="business_communityintro">The Community rating covers the company\'s commitment and effectiveness within the local, national and global community in which it does business.</string>
+    <string name="business_employees">Employees</string>
+    <string name="business_employeesintro">The Employees rating covers diversity policies, labor relations and rights, compensation, benefits, and employee training, health and safety.</string>
+    <string name="business_governance">Governance</string>
+    <string name="business_governanceintro">The Governance rating covers disclosure of policies, board independence and diversity, executive compensation, attention to stakeholder concerns, and ethical leadership and compliance.</string>
 </resources>
