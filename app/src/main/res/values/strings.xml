@@ -131,7 +131,7 @@
     <string name="impact_name">Name Here</string>
     <string name="impact_intro">Here\'s a look at your contributions so far for a better world.</string>
     <string name="impact_impactfactor">Impact Factor</string>
-    <string name="impact_impactfactor2">This is a measure of how ethical your purchases have been.</string>
+    <string name="impact_impactfactor2">This rates how ethical your purchases have been.</string>
     <string name="impact_share">SHARE</string>
     <string name="impact_impactchange">Change in Impact Factor</string>
     <string name="impact_impactchange2">Here\'s a history of how much your impact factor has changed. This week, your impact factor shifted by&#160;</string>
@@ -161,4 +161,5 @@
     <string name="business_employeesintro">The Employees rating covers diversity policies, labor relations and rights, compensation, benefits, and employee training, health and safety.</string>
     <string name="business_governance">Governance</string>
     <string name="business_governanceintro">The Governance rating covers disclosure of policies, board independence and diversity, executive compensation, attention to stakeholder concerns, and ethical leadership and compliance.</string>
+    <string name="business_recentnews">Recent News on Company</string>
 </resources>
