@@ -43,7 +43,7 @@
                 app:layout_constraintTop_toTopOf="@+id/impact_imageview_dp" />
 
             <TextView
-                android:id="@+id/impact_textview_name"
+                android:id="@+id/business_textview_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
@@ -70,7 +70,7 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:typeface="normal"
-                app:layout_constraintStart_toEndOf="@+id/impact_textview_name"
+                app:layout_constraintStart_toEndOf="@+id/business_textview_name"
                 app:layout_constraintTop_toTopOf="@+id/impact_imageview_dp" />
 
             <TextView
