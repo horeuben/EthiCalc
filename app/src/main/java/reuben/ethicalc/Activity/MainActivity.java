@@ -39,12 +39,13 @@ import com.squareup.picasso.Picasso;
 
 import reuben.ethicalc.Fragment.BlankFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
+import reuben.ethicalc.Fragment.NewsFeedFragment;
 import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,NewsFeedFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
 
@@ -145,15 +146,22 @@ public class MainActivity extends AppCompatActivity
             if (scanningResult != null) {
                 String scanContent = scanningResult.getContents();
                 String scanFormat = scanningResult.getFormatName();
+                if(scanContent!= null && scanFormat !=null){
+                    //                    //scan content is the number on the barcode--> use this number to get information about copmany
+//
+//                    //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
+                }
+                Toast.makeText(getApplicationContext(), "Hi"+scanContent+" "+scanFormat, Toast.LENGTH_SHORT).show();
+//                if(scanContent!=null&&scanFormat!=null) {
+//                    //different kinds of barcodes: EAN13, EAN_8, UPC_12
 
-                //different kinds of barcodes: EAN13, EAN_8, UPC_12
-                //scan content is the number on the barcode--> use this number to get information about copmany
-
-                //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
-                Toast.makeText(getApplicationContext(), "Go to dummy info activity", Toast.LENGTH_SHORT).show();
-                Intent dummy = new Intent(this, ItemInfoActivity.class);
-                startActivity(dummy);
-                //once get, throw it to another activity to display company info
+//                    Toast.makeText(getApplicationContext(), "Go to dummy info activity", Toast.LENGTH_SHORT).show();
+//                    Intent dummy = new Intent(this, ItemInfoActivity.class);
+//                    startActivity(dummy);
+//                }//once get, throw it to another activity to display company info
+//                else{
+//                    Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
+//                }
             } else {
                 Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
 
@@ -206,12 +214,14 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.nav_home) {
             // Handle the camera action
-            fragment = new BlankFragment();
+            fragment = new NewsFeedFragment();
 
         } else if (id == R.id.nav_database) {
 
         } else if (id == R.id.nav_barcode) {
-
+            IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+            scanIntegrator.setOrientationLocked(false);
+            scanIntegrator.initiateScan();
         } else if (id == R.id.nav_impact) {
             fragment = new BlankFragment();
 
