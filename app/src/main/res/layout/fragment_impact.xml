@@ -153,7 +153,7 @@
 
             <com.jjoe64.graphview.GraphView
                 android:id="@+id/impact_graph_impactdelta"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dip"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
@@ -166,6 +166,7 @@
                 android:id="@+id/impact_textview_impactchange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/impact_impactchange"
@@ -174,8 +175,8 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:typeface="normal"
-                app:layout_constraintTop_toBottomOf="@+id/impact_graph_impactdelta"
-                tools:layout_editor_absoluteX="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/impact_graph_impactdelta" />
 
             <TextView
                 android:id="@+id/impact_textview_impactchangeintro"
@@ -215,7 +216,7 @@
                 app:layout_constraintTop_toBottomOf="@id/impact_textview_impactchangeintro" />
 
             <Button
-                android:id="@+id/impact_button_impactshare2"
+                android:id="@+id/impact_button_changeshare"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
@@ -242,7 +243,7 @@
                 android:textStyle="bold"
                 android:typeface="normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/impact_button_impactshare2" />
+                app:layout_constraintTop_toBottomOf="@id/impact_button_changeshare" />
 
             <TextView
                 android:id="@+id/impact_textview_equivintro"
@@ -261,6 +262,271 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/impact_textview_equiv" />
+
+            <TextView
+                android:id="@+id/impact_textview_keepitup"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/impact_keepitup"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/impact_linearlayout" />
+
+            <LinearLayout
+                android:id="@+id/impact_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/impact_textview_equivintro">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/impact_button_treeshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_buttongradient"
+                        android:text="@string/impact_share"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivtree"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_imageview_equivtree" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivtreevalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/impact_equivtreevalue"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivtree"
+                        app:layout_constraintTop_toTopOf="@id/impact_imageview_equivtree" />
+
+                    <ImageView
+                        android:id="@+id/impact_imageview_equivtree"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_impact_tree" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivtreeintro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="none"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/impact_equivtreeintro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivtree"
+                        app:layout_constraintTop_toBottomOf="@id/impact_textview_equivtreevalue" />
+
+                    <Button
+                        android:id="@+id/impact_button_wagesshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_buttongradient"
+                        android:text="@string/impact_share"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivwages"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_imageview_equivwages" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivwagesvalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/impact_equivwagesvalue"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivwages"
+                        app:layout_constraintTop_toTopOf="@id/impact_imageview_equivwages" />
+
+                    <ImageView
+                        android:id="@+id/impact_imageview_equivwages"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/impact_button_treeshare"
+                        app:srcCompat="@drawable/ic_impact_wages" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivwagesintro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="none"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/impact_equivwagesintro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/impact_imageview_equivwages"
+                        app:layout_constraintTop_toBottomOf="@id/impact_textview_equivwagesvalue" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/impact_imageview_equivcharity"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_impact_charity" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivcharityvalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/impact_equivcharityvalue"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintStart_toStartOf="@+id/impact_textview_equivcharityintro"
+                        app:layout_constraintTop_toTopOf="@+id/impact_imageview_equivcharity" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivcharityintro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="none"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/impact_equivcharityintro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/impact_imageview_equivcharity"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_textview_equivcharityvalue" />
+
+                    <Button
+                        android:id="@+id/impact_button_charityshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_buttongradient"
+                        android:text="@string/impact_share"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_imageview_equivcharity" />
+
+                    <ImageView
+                        android:id="@+id/impact_imageview_equivwaste"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/impact_button_charityshare"
+                        app:srcCompat="@drawable/ic_impact_waste" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivwastevalue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/impact_equivwastevalue"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintStart_toStartOf="@+id/impact_textview_equivwasteintro"
+                        app:layout_constraintTop_toTopOf="@+id/impact_imageview_equivwaste" />
+
+                    <TextView
+                        android:id="@+id/impact_textview_equivwasteintro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="none"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/impact_equivwasteintro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/impact_imageview_equivwaste"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_textview_equivwastevalue" />
+
+                    <Button
+                        android:id="@+id/impact_button_wasteshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_buttongradient"
+                        android:text="@string/impact_share"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/impact_imageview_equivwaste" />
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
 
         </android.support.constraint.ConstraintLayout>
