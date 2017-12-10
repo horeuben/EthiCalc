@@ -90,6 +90,7 @@
             </item>
             <item>
                 <shape android:shape="rectangle">
+                    <corners android:radius="8dp"/>
                     <solid android:color="#15000000"/>
                     <padding
                         android:bottom="1px"
