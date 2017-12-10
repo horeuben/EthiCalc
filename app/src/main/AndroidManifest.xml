@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.MainActivity2" />
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,18 +38,20 @@
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.RecyclerActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activity.Shop_infomation" />
         <activity
             android:name=".Activity.ItemInfoActivity"
             android:label="@string/title_activity_item_info"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
-        <activity android:name=".Activity.CartActivity">
+        <activity android:name=".Activity.CartActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
