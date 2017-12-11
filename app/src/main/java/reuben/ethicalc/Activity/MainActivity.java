@@ -228,6 +228,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
             fragment = new GetNearbyShopsFragment();
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
 
         if(fragment!=null){
