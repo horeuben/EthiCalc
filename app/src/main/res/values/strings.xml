@@ -147,7 +147,7 @@
     <string name="impact_equivwastevalue">32</string>
     <string name="impact_equivwasteintro">Kgs of waste prevented</string>
     <string name="impact_keepitup">Keep up the good work!</string>
-    
+
     <!-- For Business Fragment -->
     <string name="business_name">Singapore Telecommunications Limited</string>
     <string name="business_type">Telecommunications</string>
