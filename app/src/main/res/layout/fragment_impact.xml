@@ -29,9 +29,8 @@
             <TextView
                 android:id="@+id/impact_textview_hi"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/impact_hi"
                 android:textAllCaps="false"
@@ -39,8 +38,10 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:typeface="normal"
+                app:layout_constraintBottom_toTopOf="@id/impact_textview_intro"
                 app:layout_constraintStart_toEndOf="@+id/impact_imageview_dp"
-                app:layout_constraintTop_toTopOf="@+id/impact_imageview_dp" />
+                app:layout_constraintTop_toTopOf="@+id/impact_imageview_dp"
+                app:layout_constraintVertical_bias="0.52" />
 
             <TextView
                 android:id="@+id/business_textview_name"
@@ -74,7 +75,7 @@
             <TextView
                 android:id="@+id/impact_textview_intro"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
@@ -320,7 +321,6 @@
                         android:id="@+id/impact_textview_equivtreevalue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-condensed"
                         android:text="@string/impact_equivtreevalue"
                         android:textAllCaps="false"
@@ -377,7 +377,6 @@
                         android:id="@+id/impact_textview_equivwagesvalue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-condensed"
                         android:text="@string/impact_equivwagesvalue"
                         android:textAllCaps="false"
@@ -489,7 +488,6 @@
                         android:id="@+id/impact_textview_equivwastevalue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif-condensed"
                         android:text="@string/impact_equivwastevalue"
                         android:textAllCaps="false"
