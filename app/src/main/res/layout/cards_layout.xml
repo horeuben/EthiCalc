@@ -19,12 +19,14 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="150dp">
+
             <ImageView
                 android:id="@+id/image_view_shop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 android:src="@drawable/pic"
-                android:scaleType="centerCrop"/>
+                card_view:layout_constraintBottom_toBottomOf="parent" />
             <TextView
                 android:id="@+id/text_view_shop"
                 android:layout_width="match_parent"
