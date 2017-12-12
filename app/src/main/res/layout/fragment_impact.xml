@@ -15,6 +15,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/impact_textview_sharetemplate"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/share_charity"
+                android:fontFamily="sans-serif-condensed"
+
+                android:paddingRight="42dp"
+                android:paddingTop="190dp"
+                android:text="+5.26"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorAccent"
+                android:textSize="45sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/impact_imageview_dp"
                 android:layout_width="120dp"
@@ -93,7 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/impact_textview_hi" />
 
             <com.github.lzyzsd.circleprogress.ArcProgress
-                android:id="@+id/impact_progressbar_impact"
+                android:id="@+id/impact_progressbar_environment"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginStart="16dp"
@@ -120,8 +142,8 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:typeface="normal"
-                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_impact"
-                app:layout_constraintTop_toTopOf="@+id/impact_progressbar_impact" />
+                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
+                app:layout_constraintTop_toTopOf="@+id/impact_progressbar_environment" />
 
             <TextView
                 android:id="@+id/impact_textview_impactfactorintro"
@@ -138,7 +160,7 @@
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_impact"
+                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
                 app:layout_constraintTop_toBottomOf="@+id/impact_textview_impactfactor" />
 
             <Button
@@ -151,8 +173,8 @@
                 android:elevation="2dp"
                 android:text="@string/impact_share"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
-                app:layout_constraintBottom_toBottomOf="@+id/impact_progressbar_impact"
-                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_impact"
+                app:layout_constraintBottom_toBottomOf="@+id/impact_progressbar_environment"
+                app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
                 app:layout_constraintTop_toBottomOf="@+id/impact_textview_impactfactorintro" />
 
             <com.jjoe64.graphview.GraphView
@@ -164,7 +186,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/impact_progressbar_impact" />
+                app:layout_constraintTop_toBottomOf="@+id/impact_progressbar_environment" />
 
             <TextView
                 android:id="@+id/impact_textview_impactchange"

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="80dp">
 
 
     <ImageView
@@ -108,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/business_textview_csr" />
 
     <com.github.lzyzsd.circleprogress.ArcProgress
-        android:id="@+id/impact_progressbar_impact"
+        android:id="@+id/impact_progressbar_environment"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
@@ -136,8 +137,8 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_impact"
-        app:layout_constraintTop_toTopOf="@+id/impact_progressbar_impact" />
+        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
+        app:layout_constraintTop_toTopOf="@+id/impact_progressbar_environment" />
 
     <TextView
         android:id="@+id/business_textview_environmentintro"
@@ -155,7 +156,7 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_impact"
+        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
         app:layout_constraintTop_toBottomOf="@+id/business_textview_environment" />
 
     <com.github.lzyzsd.circleprogress.ArcProgress
@@ -311,33 +312,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/business_textview_governance" />
 
-    <TextView
-        android:id="@+id/business_textview_recentnews"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/business_recentnews"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/business_textview_governanceintro" />
-
-    <ListView
-        android:id="@+id/business_listview_recentnewslist"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/business_textview_recentnews" />
 </android.support.constraint.ConstraintLayout>

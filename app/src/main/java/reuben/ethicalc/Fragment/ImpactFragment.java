@@ -2,8 +2,10 @@ package reuben.ethicalc.Fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +14,15 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,17 +32,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import reuben.ethicalc.Activity.MainActivity2;
 import reuben.ethicalc.Database.User;
 import reuben.ethicalc.R;
 
@@ -82,6 +90,15 @@ public class ImpactFragment extends Fragment {
     private TextView wages;
     private TextView waste;
 
+    private Button shareImpact;
+    private Button shareDelta;
+    private Button shareTrees;
+    private Button shareCharity;
+    private Button shareWages;
+    private Button shareWaste;
+    private TextView shareTemplate;
+    private ShareDialog shareDialog;
+    
     private OnFragmentInteractionListener mListener;
 
     public ImpactFragment() {
@@ -144,7 +161,7 @@ public class ImpactFragment extends Fragment {
 
         name.setText(user.getDisplayName());
 
-        impactBar = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_impact);
+        impactBar = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_environment);
         graph = (GraphView) rootView.findViewById(R.id.impact_graph_impactdelta);
         impactDeltaText = (TextView) rootView.findViewById(R.id.impact_textview_impactchangevalue);
         trees = (TextView) rootView.findViewById(R.id.impact_textview_equivtreevalue);
@@ -189,24 +206,26 @@ public class ImpactFragment extends Fragment {
                     series.setThickness(8);
                     series.setDataPointsRadius(10);
 
-                    graph.addSeries(series);
-
-                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                    graph.getGridLabelRenderer().setNumHorizontalLabels(4);
-
+                    graph.getViewport().setXAxisBoundsManual(true);
                     graph.getViewport().setMinX(graphDateGen(28).getTime());
                     graph.getViewport().setMaxX(d1.getTime());
+
+                    graph.getViewport().setYAxisBoundsManual(true);
                     graph.getViewport().setMinY(0);
                     graph.getViewport().setMaxY(100);
-                    graph.getViewport().setXAxisBoundsManual(true);
-                    graph.getViewport().setYAxisBoundsManual(true);
 
-                    graph.getGridLabelRenderer().setHumanRounding(true);
+                    graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
                     graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
-                    graph.getGridLabelRenderer().setNumVerticalLabels(5);
-                    graph.getGridLabelRenderer().setHighlightZeroLines(false);
+                    graph.getGridLabelRenderer().setHumanRounding(false);
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+                    graph.getGridLabelRenderer().setNumVerticalLabels(10);
+
+                    graph.getGridLabelRenderer().setVerticalLabelsVisible(true);
+                    graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+
+                    graph.addSeries(series);
 
 
                     if (delta >= 0) {
@@ -242,6 +261,135 @@ public class ImpactFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        shareImpact = (Button) rootView.findViewById(R.id.impact_button_impactshare);
+        shareDelta = (Button) rootView.findViewById(R.id.impact_button_changeshare);
+        shareTrees = (Button) rootView.findViewById(R.id.impact_button_treeshare);
+        shareCharity = (Button) rootView.findViewById(R.id.impact_button_charityshare);
+        shareWages = (Button) rootView.findViewById(R.id.impact_button_wagesshare);
+        shareWaste = (Button) rootView.findViewById(R.id.impact_button_wasteshare);
+        shareTemplate = (TextView) rootView.findViewById(R.id.impact_textview_sharetemplate);
+        shareDialog = new ShareDialog(this);
+
+        shareImpact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_impact));
+                shareTemplate.setText(String.valueOf(impactBar.getProgress()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        shareDelta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_delta));
+                shareTemplate.setText(String.valueOf(impactDeltaText.getText()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        shareTrees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_trees));
+                shareTemplate.setText(String.valueOf(trees.getText()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        shareCharity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_charity));
+                shareTemplate.setText(String.valueOf(charity.getText()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        shareWages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_wages));
+                shareTemplate.setText(String.valueOf(wages.getText()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        shareWaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTemplate.setBackground(getResources().getDrawable(R.drawable.share_waste));
+                shareTemplate.setText(String.valueOf(waste.getText()));
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Bitmap image = getBitmapFromView(shareTemplate);
+                    SharePhoto photo = new SharePhoto.Builder()
+                            .setBitmap(image)
+                            .build();
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content);
+                } else {
+                    Toast.makeText(view.getContext(), "You need facebook installed!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -294,5 +442,26 @@ public class ImpactFragment extends Fragment {
         int today = cal.get(Calendar.DAY_OF_WEEK) + daysBack;
         cal.add(Calendar.DAY_OF_WEEK, -today+Calendar.SUNDAY);
         return cal.getTime();
+    }
+
+    // we have a textview with a background as image, and we want to create a bitmap through it to share from facebook when using
+    public static Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        view.getBackground().setAlpha(250);// set transparency of image
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
     }
 }

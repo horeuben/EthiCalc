@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import reuben.ethicalc.Database.Company;
 import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.R;
 
@@ -29,7 +31,7 @@ import reuben.ethicalc.R;
  * Use the {@link ProductBusinessFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductBusinessFragment extends Fragment {
+public class ProductBusinessFragment extends Fragment implements BusinessFragment.OnFragmentInteractionListener,ProductFragment.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String BARCODE_NUM = "barcode num";
@@ -45,13 +47,14 @@ public class ProductBusinessFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mProductsDatabseReference;
+    private Company company;
 
     public ProductBusinessFragment() {
         // Required empty public constructor
     }
 
 
-    public static ProductBusinessFragment newInstance(String barcode, String company, int mode) {
+    public static ProductBusinessFragment newInstance(String barcode, String company, int mode,Company Pcompany) {
         ProductBusinessFragment fragment = new ProductBusinessFragment();
         Bundle args = new Bundle();
         args.putInt(MODE, mode);
@@ -61,6 +64,7 @@ public class ProductBusinessFragment extends Fragment {
 
         } else {
             args.putString(COMPANY_NAME, company);
+            args.putParcelable("company",Pcompany);
         }
         fragment.setArguments(args);
         return fragment;
@@ -78,6 +82,7 @@ public class ProductBusinessFragment extends Fragment {
             }
             else{ //if there is company name no barcode number
                 companyName = getArguments().getString(COMPANY_NAME);
+                company = getArguments().getParcelable("company");
             }
 
         }
@@ -108,10 +113,9 @@ public class ProductBusinessFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        for (DataSnapshot data :dataSnapshot.getChildren()) {
-                            Product product = data.getValue(Product.class);
-                            companyName = product.getCompanyName();
-                        }
+
+                        Product product = dataSnapshot.getValue(Product.class);
+                        companyName = product.getCompanyName();
                         //commit company name from what i got from firebase
                         Fragment compFrag = new BusinessFragment();
                         Bundle compBundle = new Bundle();
@@ -136,7 +140,7 @@ public class ProductBusinessFragment extends Fragment {
             //if mode=0 only have company name no barcode
             Fragment compFrag = new BusinessFragment();
             Bundle compBundle = new Bundle();
-            compBundle.putString(COMPANY_NAME,companyName);
+            compBundle.putParcelable("company",company);
             compFrag.setArguments(compBundle);
             transaction.replace(R.id.companyLinearLayout, compFrag);
             transaction.commit();
@@ -174,6 +178,11 @@ public class ProductBusinessFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

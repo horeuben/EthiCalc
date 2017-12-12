@@ -1,7 +1,16 @@
 package reuben.ethicalc.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,6 +37,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
 
     public List<Company> companyList;
     Context context;
+    ViewHolder viewHolder;
 
 
     public CompanyAdapter(Context context, List<Company> companies) {
@@ -42,7 +53,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent){
-        ViewHolder viewHolder = null;
+        viewHolder = null;
         Company company = getItem(position);
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
@@ -69,6 +80,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
         Picasso.with(context)
                 .load(company.getPictureUrl())
                 .into(viewHolder.companyLogo);
+
         viewHolder.companyCSR.setText(company.getCSRRating());
 
         return convertView;
@@ -78,6 +90,5 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
 
         this.companyList = data;
     }
-
 
 }
