@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity
                     //save result here, fragment transaction takes place in OnREsume
                     barcodeNumber = scanContent;
                 }
-                Toast.makeText(getApplicationContext(), "Hi"+scanContent, Toast.LENGTH_SHORT).show();
 
             } else {
                 Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
@@ -316,6 +315,7 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle ();
             bundle.putString("barcode num",barcodeNumber);
             bundle.putInt("mode",1);
+            setTitle("Product details");
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container,pdtBizFrag);
