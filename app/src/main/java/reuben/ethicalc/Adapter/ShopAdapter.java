@@ -80,7 +80,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
             shopTextView = (TextView) this.v.findViewById(R.id.text_view_shop);
             shopImageView = (ImageView) this.v.findViewById(R.id.image_view_shop);
 
-            Picasso.with(parentContext).load(data.get(position).getImageUrl()).into(shopImageView);
+            Picasso.with(parentContext).load(data.get(position).getImageUrl()).fit().into(shopImageView);
 
             String shopName = data.get(position).getName();
             double dist = data.get(position).getDistance();

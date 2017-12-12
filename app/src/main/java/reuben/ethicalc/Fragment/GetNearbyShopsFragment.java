@@ -57,7 +57,10 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9ae3205169e6ffb3300f996594c696ca679eee7
     private OnFragmentInteractionListener mListener;
     public static final String KEY = "Geofence";
     PendingIntent mGeofencePendingIntent;
