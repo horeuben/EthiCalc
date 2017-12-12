@@ -41,7 +41,8 @@
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity.MainActivity"/>
         <activity android:name=".Activity.Shop_infomation" />
         <activity
             android:name=".Activity.ItemInfoActivity"

@@ -271,7 +271,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(fragment!=null){
-            transaction.replace(R.id.fragment_container,fragment);
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.addToBackStack("backStack");
+            //transaction.replace(R.id.fragment_container,fragment);
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -298,13 +300,13 @@ public class MainActivity extends AppCompatActivity
 
                 default:
                     //change to different fragments
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).addToBackStack("backStack").commit();
                     navigationView.getMenu().getItem(0).setChecked(true);
                     onNavigationItemSelected(navigationView.getMenu().getItem(0));
                     break;
                 case "Impactfragment":
                     //go to impact fragment;
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ImpactFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ImpactFragment()).addToBackStack("backStack").commit();
                     navigationView.getMenu().getItem(3).setChecked(true);
                     onNavigationItemSelected(navigationView.getMenu().getItem(3));
                     break;
@@ -318,7 +320,9 @@ public class MainActivity extends AppCompatActivity
             bundle.putInt("mode",1);
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container,pdtBizFrag);
+            //transaction.replace(R.id.fragment_container,pdtBizFrag);
+            transaction.add(pdtBizFrag,"fragment");
+            transaction.addToBackStack("backStack");
             transaction.commit();
         }
 
