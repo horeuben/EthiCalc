@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.firebase.database.DataSnapshot;
@@ -74,7 +75,7 @@ public class BusinessFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_impact,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_business,container,false);
         companyLogo = (ImageView) rootView.findViewById(R.id.business_imageview_logo);
         companyName = (TextView) rootView.findViewById(R.id.impact_textview_name);
         companyType = (TextView) rootView.findViewById(R.id.business_textview_type);
@@ -85,27 +86,26 @@ public class BusinessFragment extends Fragment {
         companyGovernance = (ArcProgress) rootView.findViewById(R.id.business_progressbar_governance);
 
         mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
-        mProductsDatabseReference = mFireBaseDatabase.getReference().child("products");
-        Query companyQuery = mProductsDatabseReference.orderByChild("companyName").equalTo(businessName);
+        mProductsDatabseReference = mFireBaseDatabase.getReference().child("companies");
+        Query companyQuery = mProductsDatabseReference.equalTo(businessName);
         companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot data :dataSnapshot.getChildren()) {
-                        Company company = data.getValue(Company.class);
-                        companyName.setText(company.getCompanyName());
-                        companyType.setText(company.getCompanyType());
-                        companyCSR.setProgress(Integer.parseInt(company.getCSRRating()));
-                        companyEnvironment.setProgress(Integer.parseInt(company.getEnvironmentRating()));
-                        companyCommunity.setProgress(Integer.parseInt(company.getCommunityRating()));
-                        companyEmployee.setProgress(Integer.parseInt(company.getEmployeesRating()));
-                        companyGovernance.setProgress(Integer.parseInt(company.getGovernanceRating()));
-                        Picasso.with(getActivity())
-                                .load(company.getPictureUrl())
-                                .fit()
-                                .into(companyLogo);
+                    Toast.makeText(getActivity(),"im here",Toast.LENGTH_LONG).show();
+                    Company company = dataSnapshot.getValue(Company.class);
+                    companyName.setText(company.getCompanyName());
+                    companyType.setText(company.getCompanyType());
+                    companyCSR.setProgress(Integer.parseInt(company.getCSRRating()));
+                    companyEnvironment.setProgress(Integer.parseInt(company.getEnvironmentRating()));
+                    companyCommunity.setProgress(Integer.parseInt(company.getCommunityRating()));
+                    companyEmployee.setProgress(Integer.parseInt(company.getEmployeesRating()));
+                    companyGovernance.setProgress(Integer.parseInt(company.getGovernanceRating()));
+                    Picasso.with(getActivity())
+                            .load(company.getPictureUrl())
+                            .fit()
+                            .into(companyLogo);
 
-                    }
                 }
             }
 
