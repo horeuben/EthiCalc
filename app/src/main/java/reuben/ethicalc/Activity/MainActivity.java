@@ -42,13 +42,14 @@ import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.Fragment.ImpactFragment;
 import reuben.ethicalc.Fragment.NewsFeedFragment;
+import reuben.ethicalc.Fragment.ProductBusinessFragment;
 import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
-        NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener {
+        NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener{
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
 
@@ -147,24 +148,16 @@ public class MainActivity extends AppCompatActivity
 
             // if there actually is a result from the scannig activity
             if (scanningResult != null) {
-                String scanContent = scanningResult.getContents();
-                String scanFormat = scanningResult.getFormatName();
-                if(scanContent!= null && scanFormat !=null){
-                    //                    //scan content is the number on the barcode--> use this number to get information about copmany
-//
-//                    //get the company by searching on this website http://gepir.gs1.org/index.php/search-by-gtin
-                }
-                Toast.makeText(getApplicationContext(), "Hi"+scanContent+" "+scanFormat, Toast.LENGTH_SHORT).show();
-//                if(scanContent!=null&&scanFormat!=null) {
-//                    //different kinds of barcodes: EAN13, EAN_8, UPC_12
+                String scanContent = scanningResult.getContents(); //barcode number
+                if(scanContent!= null){
+                    //insert intent here
+                    Fragment fragment = new ProductBusinessFragment();
+                    Bundle bundle = new Bundle ();
+                    bundle.putString("barcode num",scanContent);
+                    bundle.putInt("mode",1);
 
-//                    Toast.makeText(getApplicationContext(), "Go to dummy info activity", Toast.LENGTH_SHORT).show();
-//                    Intent dummy = new Intent(this, ItemInfoActivity.class);
-//                    startActivity(dummy);
-//                }//once get, throw it to another activity to display company info
-//                else{
-//                    Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
-//                }
+                }
+                Toast.makeText(getApplicationContext(), "Hi"+scanContent, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
 

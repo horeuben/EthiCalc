@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,12 +55,11 @@ public class CompanyListFragment extends Fragment {
     private ListView companyListView;
     private CompanyAdapter companyAdapter; //adapter to be used when listView is instantiated
     private CompanyAdapter searchAdapter; //adapter to be used by search bar
-    List<Company> companies;
+    List<Company> companies = new ArrayList<Company>();
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mCompaniesDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private OnFragmentInteractionListener mListener;
-    private List<String> companyNames;
 
     public CompanyListFragment() {
         // Required empty public constructor
@@ -101,7 +101,8 @@ public class CompanyListFragment extends Fragment {
         companySearchView = (SearchView) rootView.findViewById(R.id.companylist_searchview);
 
         //setting up my list view
-
+        companyAdapter = new CompanyAdapter(getActivity(),companies);
+        companyListView.setAdapter(companyAdapter);
         //grab information from firebase
         mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
         mCompaniesDatabaseReference = mFireBaseDatabase.getReference().child("companies");
@@ -112,12 +113,17 @@ public class CompanyListFragment extends Fragment {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot data: dataSnapshot.getChildren()){
                         Company company = data.getValue(Company.class);
-                       //Log.i("adding from database","ADDED");
+                        Log.i("adding from database","ADDED");
                         //populate the list that will be attached to my adapter
                         companies.add(company);
                         //populate list of company names so i can implement my autocomplete
-                        companyNames.add(company.getCompanyName());
+                        Toast.makeText(getActivity(), company.getCompanyName(), Toast.LENGTH_SHORT).show();
+
                     }
+                    Log.i("adding from database","FINISHED ADDING");
+                    Toast.makeText(getActivity(), String.valueOf(companies.size()), Toast.LENGTH_SHORT).show();
+                    companyAdapter.update(companies);
+                    companyAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -127,63 +133,19 @@ public class CompanyListFragment extends Fragment {
 
             }
         });
-       // Log.i("adding from database","FINISHED ADDING");
-        companyAdapter = new CompanyAdapter(getActivity(),companies);
-       // Log.i("companies size",String.valueOf(companies.isEmpty()));
-        companyListView.setAdapter(companyAdapter);
 
-
-        //setting up my search bar
-        companySearchView.setIconified(false); //so you can directly enter you search
-        companySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() { //so the list view changes dynamically with what you enter in the search view
-
-            List<Company> allMatches = new ArrayList<Company>();
+        companyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) { //to spell check user's input
-                for (String possibleMatch: companyNames){
-                    double levenDist = (double) LevenshteinDistance(s, possibleMatch);
-                    double longestSubseq = (double) LongestLCS(s, possibleMatch);
-                    Double normalizedScore = (((possibleMatch.length() - levenDist) / possibleMatch.length()) * 0.3) + (longestSubseq / possibleMatch.length() * 0.7);
-                    Log.i("norm score","norm score of "+possibleMatch+" is "+Double.toString(normalizedScore));
-                    //if normalized score is >50% that's a match!
-                    if (normalizedScore >= 0.5) {
-                        for (Company c:companies){
-                            if (c.getCompanyName().equals(possibleMatch)){
-                                allMatches.add(c); //add companies whose name matches the possible match into the list of match rsults
-                            }
-                        }
-                    }
-                }
-
-                if (allMatches.size() == 0) {
-                    //prediction returns 0
-                    Toast.makeText(getActivity(), "No results found", Toast.LENGTH_SHORT).show();
-                } else {
-                    searchAdapter = new CompanyAdapter(getActivity(),allMatches);
-                    companyListView.setAdapter(searchAdapter);
-                }
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                ArrayList<Company> tempCompanies = new ArrayList<>();
-                for (Company c:companies){
-                    if (c.getCompanyName().contains(s.toLowerCase())){ //ignore capitalization, if name contains my entry words i change list adapter
-                        tempCompanies.add(c);
-                    }
-                }
-                //make a new adapter for the company list
-                CompanyAdapter searchVCompanyAdapter = new CompanyAdapter(getActivity(),tempCompanies);
-                searchVCompanyAdapter.notifyDataSetChanged();
-                companyListView.setAdapter(searchVCompanyAdapter);
-                return true;
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Fragment fragment = new ProductBusinessFragment();
+                Bundle bundle = new Bundle ();
+                bundle.putString("company name",companies.get(i).getCompanyName());
+                bundle.putInt("mode",0);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.commit();
             }
         });
-
-
-
-
 
 
         return rootView;
@@ -230,61 +192,7 @@ public class CompanyListFragment extends Fragment {
     }
 
 
-    //Levenshtien distance calculates the minimum number of insertions, deletions and substitutions to get from one word to the next
-    //we will use it to predict what local names the user is trying to spell in the search view
-    private int LevenshteinDistance(String Userinput, String Answer){
-        char[] UserinputChar = Userinput.toCharArray();
-        char[] AnswerChar = Answer.toCharArray();
 
-        int[][] LevenshteinMat = new int [UserinputChar.length+1][AnswerChar.length+1];
-        for (int i=0; i<=UserinputChar.length;i++){
-            LevenshteinMat[i][0]=i;
-        }
-        for (int j=0; j<=AnswerChar.length;j++){
-            LevenshteinMat[0][j]=j;
-        }
-        int substitutionCost;
-        for (int l=1;l<=Userinput.length();l++){
-            for (int k=1;k<=Answer.length();k++){
-                if (UserinputChar[l-1]==AnswerChar[k-1]){
-                    substitutionCost=0;
-                }
-                else{
-                    substitutionCost=1;
-                }
-                LevenshteinMat[l][k] = Collections.min(Arrays.asList(LevenshteinMat[l-1][k]+1,
-                        LevenshteinMat[l][k-1]+1, LevenshteinMat[l-1][k-1]+substitutionCost));
-            }
-        }
-        return LevenshteinMat[UserinputChar.length][AnswerChar.length];
-    }
-
-    //longest common subsequence. subsequence need not be consecutive so it works great for predicting text especially since users may insert or delete certain letters
-    //from the place name they intend to spell
-    private int LongestLCS(String Userinput, String Answer){
-        //ignore capitalization
-        char[] UserinputChar = Userinput.toLowerCase().toCharArray();
-        char[] AnswerChar = Answer.toLowerCase().toCharArray();
-
-        int[][] LCSMat = new int [UserinputChar.length+1][AnswerChar.length+1];
-        for (int i=0; i<=UserinputChar.length;i++){
-            LCSMat[i][0]=0;
-        }
-        for (int j=0; j<=AnswerChar.length;j++){
-            LCSMat[0][j]=0;
-        }
-        for (int l=1;l<=Userinput.length();l++){
-            for (int k=1;k<=Answer.length();k++) {
-                if (UserinputChar[l-1]==AnswerChar[k-1]){
-                    LCSMat[l][k]=LCSMat[l-1][k-1]+1;
-                }
-                else{
-                    LCSMat[l][k]=Collections.max(Arrays.asList(LCSMat[l][k-1],LCSMat[l-1][k]));
-                }
-            }
-        }
-        return LCSMat[UserinputChar.length][AnswerChar.length];
-    }
 
 
 }

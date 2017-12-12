@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import reuben.ethicalc.Database.Company;
 import reuben.ethicalc.Database.NewsItem;
+import reuben.ethicalc.Database.ShopClass;
 import reuben.ethicalc.R;
 
 /**
@@ -27,7 +29,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
     Context context;
 
 
-    public CompanyAdapter(@NonNull Context context, List<Company> companies) {
+    public CompanyAdapter(Context context, List<Company> companies) {
         super(context,0, companies);
         this.context=context;
         this.companyList = companies;
@@ -40,7 +42,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent){
-        CompanyAdapter.ViewHolder viewHolder = null;
+        ViewHolder viewHolder = null;
         Company company = getItem(position);
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
@@ -72,6 +74,10 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
         return convertView;
     }
 
+    public void update(List<Company> data){
+
+        this.companyList = data;
+    }
 
 
 }

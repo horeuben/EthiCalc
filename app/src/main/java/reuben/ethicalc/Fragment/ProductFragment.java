@@ -1,68 +1,57 @@
 package reuben.ethicalc.Fragment;
 
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import reuben.ethicalc.Database.Company;
 import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BusinessFragment.OnFragmentInteractionListener} interface
+ * {@link ProductFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BusinessFragment#newInstance} factory method to
+ * Use the {@link ProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusinessFragment extends Fragment {
+public class ProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String COMPANY_NAME = "company name";
+    private static final String BARCODE_NUM = "barcode num";
+
 
     // TODO: Rename and change types of parameters
-    private String businessName;
-    private ImageView companyLogo;
-    private TextView companyName;
-    private TextView companyType;
-    private ArcProgress companyCSR;
-    private ArcProgress companyEnvironment;
-    private ArcProgress companyCommunity;
-    private ArcProgress companyEmployee;
-    private ArcProgress companyGovernance;
+    private String barcodeNumber;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mProductsDatabseReference;
+    private TextView pdtName;
+    private TextView pdtPrice;
 
     private OnFragmentInteractionListener mListener;
 
-    public BusinessFragment() {
+    public ProductFragment() {
         // Required empty public constructor
     }
 
 
-    public static BusinessFragment newInstance(String businessName) {
-        BusinessFragment fragment = new BusinessFragment();
+    // TODO: Rename and change types and number of parameters
+    public static ProductFragment newInstance(String barcodeNumber) {
+        ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
-        args.putString(COMPANY_NAME, businessName);
+        args.putString(BARCODE_NUM, barcodeNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,44 +60,30 @@ public class BusinessFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            businessName = getArguments().getString(COMPANY_NAME);
+            barcodeNumber = getArguments().getString(BARCODE_NUM);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_impact,container,false);
-        companyLogo = (ImageView) rootView.findViewById(R.id.business_imageview_logo);
-        companyName = (TextView) rootView.findViewById(R.id.impact_textview_name);
-        companyType = (TextView) rootView.findViewById(R.id.business_textview_type);
-        companyCSR = (ArcProgress) rootView.findViewById(R.id.business_progressbar_csr);
-        companyEnvironment = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_environment);
-        companyCommunity = (ArcProgress) rootView.findViewById(R.id.business_progressbar_community);
-        companyEmployee = (ArcProgress) rootView.findViewById(R.id.business_progressbar_employees);
-        companyGovernance = (ArcProgress) rootView.findViewById(R.id.business_progressbar_governance);
+        View rootview = inflater.inflate(R.layout.fragment_product, container, false);
+
+        pdtName = rootview.findViewById(R.id.product_textview_name);
+        pdtPrice = rootview.findViewById(R.id.product_textview_msrp);
+
 
         mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
         mProductsDatabseReference = mFireBaseDatabase.getReference().child("products");
-        Query companyQuery = mProductsDatabseReference.orderByChild("companyName").equalTo(businessName);
-        companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query pdtQuery = mProductsDatabseReference.orderByChild("barcode").equalTo(barcodeNumber);
+        pdtQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot data :dataSnapshot.getChildren()) {
-                        Company company = data.getValue(Company.class);
-                        companyName.setText(company.getCompanyName());
-                        companyType.setText(company.getCompanyType());
-                        companyCSR.setProgress(Integer.parseInt(company.getCSRRating()));
-                        companyEnvironment.setProgress(Integer.parseInt(company.getEnvironmentRating()));
-                        companyCommunity.setProgress(Integer.parseInt(company.getCommunityRating()));
-                        companyEmployee.setProgress(Integer.parseInt(company.getEmployeesRating()));
-                        companyGovernance.setProgress(Integer.parseInt(company.getGovernanceRating()));
-                        Picasso.with(getActivity())
-                                .load(company.getPictureUrl())
-                                .fit()
-                                .into(companyLogo);
-
+                        Product product = data.getValue(Product.class);
+                        pdtName.setText(product.getProductName());
+                        pdtPrice.setText(product.getMSRP());
                     }
                 }
             }
@@ -120,7 +95,7 @@ public class BusinessFragment extends Fragment {
         });
 
 
-        return rootView;
+        return rootview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
