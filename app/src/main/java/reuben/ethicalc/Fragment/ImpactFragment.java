@@ -206,24 +206,24 @@ public class ImpactFragment extends Fragment {
                     series.setThickness(8);
                     series.setDataPointsRadius(10);
 
-                    graph.getViewport().setXAxisBoundsManual(true);
-                    graph.getViewport().setMinX(graphDateGen(28).getTime());
-                    graph.getViewport().setMaxX(d1.getTime());
+//                    graph.getViewport().setXAxisBoundsManual(true);
+//                    graph.getViewport().setMinX(graphDateGen(28).getTime());
+//                    graph.getViewport().setMaxX(d1.getTime());
+//
+//                    graph.getViewport().setYAxisBoundsManual(true);
+//                    graph.getViewport().setMinY(0);
+//                    graph.getViewport().setMaxY(100);
 
-                    graph.getViewport().setYAxisBoundsManual(true);
-                    graph.getViewport().setMinY(0);
-                    graph.getViewport().setMaxY(100);
-
-                    graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+//                    graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
                     graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
-                    graph.getGridLabelRenderer().setHumanRounding(false);
-                    graph.getGridLabelRenderer().setNumHorizontalLabels(3);
-                    graph.getGridLabelRenderer().setNumVerticalLabels(10);
+//                    graph.getGridLabelRenderer().setHumanRounding(false);
 
-                    graph.getGridLabelRenderer().setVerticalLabelsVisible(true);
-                    graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+//                    graph.getGridLabelRenderer().setVerticalLabelsVisible(true);
+//                    graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
 
                     graph.addSeries(series);
 
