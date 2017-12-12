@@ -1,5 +1,7 @@
 package reuben.ethicalc.Fragment;
 
+//import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +11,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -28,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -35,6 +40,7 @@ import java.util.List;
 
 
 import reuben.ethicalc.Adapter.ShopAdapter;
+import reuben.ethicalc.Database.Company;
 import reuben.ethicalc.Database.Shop;
 import reuben.ethicalc.Database.ShopClass;
 import reuben.ethicalc.R;
@@ -57,9 +63,8 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private ListView shopsListView;
     private OnFragmentInteractionListener mListener;
-    public static final String KEY = "Geofence";
     PendingIntent mGeofencePendingIntent;
     public static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 100;
     private List<Geofence> mGeofenceList;
@@ -67,8 +72,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     public static final String TAG = "Rafaela";
     LocationRequest mLocationRequest;
     double currentLatitude = 8.5565795, currentLongitude = 76.8810227;
-    ArrayList<ShopClass> ShopClasses = new ArrayList<>();
-    private RecyclerView recyclerView;
+    ArrayList<ShopClass> ShopClasses ;
     private ShopAdapter mshopAdapter;
     Location mylocation;
     public GetNearbyShopsFragment() {
@@ -108,45 +112,36 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview =  inflater.inflate(R.layout.recycler_view, container, false);
+        View rootview =  inflater.inflate(R.layout.fragment_nearbyshops, container, false);
+        getActivity().setTitle("Nearby shops");
         mGeofenceList = new ArrayList<Geofence>();
-
-        
         int resp = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (resp == ConnectionResult.SUCCESS) {
-
-//            initGoogleAPIClient();
             createGeofences(1.334276,103.962793,100,"Changi City Point");//CCP
             createGeofences(1.340628,103.963193,50,"Campus Centre");//campus centre
-            //createGeofences(1.342345, 103.962187,100,"one world");
             getGeofencingRequest();
         } else {
             Log.e(TAG, "Your Device doesn't support Google Play Services.");
         }
+        ShopClasses = new ArrayList<>();
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(1000)
                 .setFastestInterval(1000);
-        recyclerView = rootview.findViewById(R.id.recyclerView);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        mshopAdapter = new ShopAdapter(getActivity(), ShopClasses);
-        recyclerView.setAdapter(mshopAdapter);
-        //getCurrentLocation();
+        shopsListView = (ListView) rootview.findViewById(R.id.shopsList);
+        mshopAdapter = new ShopAdapter(getActivity(),ShopClasses);
+        shopsListView.setAdapter(mshopAdapter);
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
         DatabaseReference mShopsDatabaseReference = mFirebaseDatabase.getReference().child("shops");
         final ArrayList<Shop> Allshops = new ArrayList<>();
         mShopsDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.e("linwei",dataSnapshot.toString());
                 Log.i("checking",String.valueOf(dataSnapshot.getChildrenCount()));
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Shop shop = data.getValue(Shop.class);
                     Allshops.add(shop);
                 }
-
                 for (Shop thisshop : Allshops){
                     String Locationname = thisshop.getShopname();
                     Location newloc = new Location("check");
@@ -154,18 +149,61 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                     newloc.setLatitude(Double.valueOf(thisshop.getLat()));
                     double distance = mylocation.distanceTo(newloc);
                     if (distance<1000) {
-                        ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),thisshop.getPicureurl(),distance);
+                        ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),distance);
                         ShopClasses.add(newshop);
-
                     }}
                 sort(ShopClasses);
                 mshopAdapter.update(ShopClasses);
                 mshopAdapter.notifyDataSetChanged();
+                shopsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        ShopClass thisshop = ShopClasses.get(position);
+                        final String companyname = thisshop.getDescription();
+                        FirebaseDatabase newFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
+                        DatabaseReference newCompaniesDatabaseReference = newFireBaseDatabase.getReference().child("companies");
+                        final Query companyQuery = newCompaniesDatabaseReference.orderByChild("companyName");
+                        companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    for (DataSnapshot data: dataSnapshot.getChildren()){
+                                        Company company = data.getValue(Company.class);
+                                        if (company.getCompanyName().equals(companyname)){
+                                            Fragment fragment = new ProductBusinessFragment();
+                                            Bundle bundle = new Bundle ();
+                                            bundle.putParcelable("company",company);
+                                            bundle.putInt("mode",0);
+                                            fragment.setArguments(bundle);
+
+                                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                            transaction.replace(R.id.fragment_container, fragment);
+                                            transaction.addToBackStack("");
+                                            transaction.commit();
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                });
+
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
         return rootview;
     }
     private void sort(ArrayList<ShopClass> shops ){
@@ -204,6 +242,8 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -256,7 +296,6 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                             @Override
                             public void onResult(Status status) {
                                 if (status.isSuccess()) {
-                                    Log.i(TAG, "saved geofence"+mGeofenceList.size()+"now");
 
                                 } else {
                                     Log.e(TAG, "Registering geofence failed: " + status.getStatusMessage() +
@@ -307,10 +346,8 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     private PendingIntent getGeofencePendingIntent() {
         // Reuse the PendingIntent if we already have it.
         if (mGeofencePendingIntent != null) {
-            Log.i(TAG,"intent has value");
             return mGeofencePendingIntent;
         }
-        Log.i(TAG,"intent=null");
         Intent intent = new Intent(getActivity(), GeofenceTransitionsIntentService.class);
         return PendingIntent.getService(getActivity(), 0, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
@@ -321,20 +358,5 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         currentLatitude = location.getLatitude();
         currentLongitude = location.getLongitude();
     }
-/*
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }*/
 
 }

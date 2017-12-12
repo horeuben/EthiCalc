@@ -7,7 +7,6 @@ package reuben.ethicalc.Database;
 public class Shop {
     private String shopname;
     private String description;
-    private String picureurl;
     private String lat;
     private String lng;
 
@@ -43,21 +42,12 @@ public class Shop {
         this.description = description;
     }
 
-    public String getPicureurl() {
-        return picureurl;
-    }
-
-    public void setPicureurl(String picureurl) {
-        this.picureurl = picureurl;
-    }
-
     public Shop() {
 
     }
-    public Shop (String shopname, String description, String picureurl) {
+    public Shop (String shopname, String description) {
         this.shopname = shopname;
         this.description = description;
-        this.picureurl = picureurl;
     }
 
 }

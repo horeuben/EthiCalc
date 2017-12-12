@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity
 
 
         if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Go to cart activity", Toast.LENGTH_SHORT).show();
+
             setTitle("Shopping Cart");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             Fragment fragment = new CartFragment();
@@ -249,19 +249,15 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.nav_news_feed) {
             // Handle the camera action
-            setTitle("News Feed");
             fragment = new NewsFeedFragment();
 
         } else if (id ==R.id.nav_companies){
-            setTitle("Companies");
           fragment = new CompanyListFragment();
 
         } else if (id == R.id.nav_impact) {
-            setTitle("Your Impact");
             fragment = new ImpactFragment();
 
         } else if (id == R.id.nav_nearbyshops) {
-            setTitle("Nearby shops");
             fragment = new GetNearbyShopsFragment();
 
         } else if (id == R.id.nav_logout) {
@@ -272,6 +268,7 @@ public class MainActivity extends AppCompatActivity
 
         if(fragment!=null){
             transaction.replace(R.id.fragment_container, fragment);
+            getSupportFragmentManager().popBackStack();
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

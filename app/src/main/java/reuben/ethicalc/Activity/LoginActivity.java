@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity2.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         } else {
             // Choose authentication providers
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == ResultCodes.OK) {
                 // Successfully signed in
                 //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                startActivity(new Intent(LoginActivity.this, MainActivity2.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             } else {
                 // Sign in failed, check response for error code
