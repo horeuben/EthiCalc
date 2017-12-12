@@ -5,14 +5,14 @@ package reuben.ethicalc.Database;
  */
 
 public class Company {
-    public String companyName;
-    public String companyType;
-    public String CSRRating;
-    public String environmentRating;
-    public String communityRating;
-    public String employeesRating;
-    public String governanceRating;
-    public String pictureUrl;
+    private String companyName;
+    private String companyType;
+    private String CSRRating;
+    private String environmentRating;
+    private String communityRating;
+    private String employeesRating;
+    private String governanceRating;
+    private String pictureUrl;
     public Company() {
     }
 

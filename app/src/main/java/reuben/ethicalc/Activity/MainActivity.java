@@ -34,9 +34,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import reuben.ethicalc.Database.User;
 import reuben.ethicalc.Fragment.BlankFragment;
 import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
@@ -46,13 +52,22 @@ import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
         NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener {
+
+    private FirebaseDatabase mFireBaseDatabase;
+    private DatabaseReference mUsersDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
+
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
 
-    private TextView textViewName;
+    private TextView textViewName, textViewImpact;
+
+    private double impact;
 
     private static final int MY_LOCATION_REQUEST_CODE = 9;
 
@@ -111,6 +126,30 @@ public class MainActivity extends AppCompatActivity
 
         textViewName.setText(user.getDisplayName());
         imageViewStarIcon.setImageResource(R.drawable.ic_grade_black_24dp);
+
+        textViewImpact = (TextView) naviheaderview.findViewById(R.id.textViewImpactFactorVal);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        final String uid = mFirebaseAuth.getUid();
+        mFireBaseDatabase = FirebaseDatabase.getInstance();
+        mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mUsersDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(uid)) {
+                    impact = Double.valueOf(dataSnapshot.child(uid).child("Impact").getValue().toString());
+                    textViewImpact.setText(String.valueOf(impact));
+                }
+                else {
+                    mUsersDatabaseReference.child(uid).setValue(new User(user.getDisplayName(),"0","50","50","0","0","0","50","50","50","50"));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         Button fab = (Button) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
