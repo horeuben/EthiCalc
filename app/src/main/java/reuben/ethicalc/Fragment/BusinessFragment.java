@@ -79,7 +79,7 @@ public class BusinessFragment extends Fragment {
         companyName = (TextView) rootView.findViewById(R.id.impact_textview_name);
         companyType = (TextView) rootView.findViewById(R.id.business_textview_type);
         companyCSR = (ArcProgress) rootView.findViewById(R.id.business_progressbar_csr);
-        companyEnvironment = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_environment);
+        companyEnvironment = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_impact);
         companyCommunity = (ArcProgress) rootView.findViewById(R.id.business_progressbar_community);
         companyEmployee = (ArcProgress) rootView.findViewById(R.id.business_progressbar_employees);
         companyGovernance = (ArcProgress) rootView.findViewById(R.id.business_progressbar_governance);

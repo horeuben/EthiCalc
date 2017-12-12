@@ -51,14 +51,11 @@ public class CompanyListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private SearchView companySearchView;
     private ListView companyListView;
     private CompanyAdapter companyAdapter; //adapter to be used when listView is instantiated
-    private CompanyAdapter searchAdapter; //adapter to be used by search bar
     List<Company> companies = new ArrayList<Company>();
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mCompaniesDatabaseReference;
-    private FirebaseAuth mFirebaseAuth;
     private OnFragmentInteractionListener mListener;
 
     public CompanyListFragment() {
@@ -98,8 +95,6 @@ public class CompanyListFragment extends Fragment {
         // Inflate the layout for this fragment\
         View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
         companyListView = (ListView) rootView.findViewById(R.id.companylist_listview);
-        companySearchView = (SearchView) rootView.findViewById(R.id.companylist_searchview);
-
         //setting up my list view
         companyAdapter = new CompanyAdapter(getActivity(),companies);
         companyListView.setAdapter(companyAdapter);
@@ -124,6 +119,18 @@ public class CompanyListFragment extends Fragment {
                     Toast.makeText(getActivity(), String.valueOf(companies.size()), Toast.LENGTH_SHORT).show();
                     companyAdapter.update(companies);
                     companyAdapter.notifyDataSetChanged();
+                    companyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Fragment fragment = new ProductBusinessFragment();
+                            Bundle bundle = new Bundle ();
+                            bundle.putString("company name",companies.get(i).getCompanyName());
+                            bundle.putInt("mode",0);
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, fragment);
+                            transaction.commit();
+                        }
+                    });
                 }
             }
 
@@ -131,19 +138,6 @@ public class CompanyListFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        companyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Fragment fragment = new ProductBusinessFragment();
-                Bundle bundle = new Bundle ();
-                bundle.putString("company name",companies.get(i).getCompanyName());
-                bundle.putInt("mode",0);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.commit();
             }
         });
 
