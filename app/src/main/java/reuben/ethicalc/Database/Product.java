@@ -10,6 +10,8 @@ public class Product {
     private String MSRP;
     private String companyName;
 
+
+    public Product(){}
     public Product(String productName, String barcode, String MSRP, String companyName) {
         this.productName = productName;
         this.barcode = barcode;

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +30,7 @@ import reuben.ethicalc.R;
  * Use the {@link ProductBusinessFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductBusinessFragment extends Fragment {
+public class ProductBusinessFragment extends Fragment implements BusinessFragment.OnFragmentInteractionListener,ProductFragment.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String BARCODE_NUM = "barcode num";
@@ -69,6 +70,7 @@ public class ProductBusinessFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(getActivity(), "here", Toast.LENGTH_SHORT).show();
         if (getArguments() != null) {
 
             mode = getArguments().getInt(MODE);
@@ -87,6 +89,7 @@ public class ProductBusinessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Toast.makeText(getActivity(), "pdtbiz", Toast.LENGTH_SHORT).show();
         View rootview = inflater.inflate(R.layout.fragment_product_business, container, false);
         companyLinearLayout = rootview.findViewById(R.id.companyLinearLayout);
         pdtLinearLayout = rootview.findViewById(R.id.pdtLinearLayout);
@@ -174,6 +177,11 @@ public class ProductBusinessFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

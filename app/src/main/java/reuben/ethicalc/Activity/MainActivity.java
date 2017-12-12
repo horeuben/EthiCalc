@@ -42,13 +42,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.Database.User;
 import reuben.ethicalc.Fragment.BlankFragment;
+import reuben.ethicalc.Fragment.BusinessFragment;
 import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.Fragment.ImpactFragment;
 import reuben.ethicalc.Fragment.NewsFeedFragment;
 import reuben.ethicalc.Fragment.ProductBusinessFragment;
+import reuben.ethicalc.Fragment.ProductFragment;
 import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -57,13 +60,15 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
-        NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener{
+        NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener,
+        ProductFragment.OnFragmentInteractionListener,BusinessFragment.OnFragmentInteractionListener{
 
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mUsersDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
+    private String barcodeNumber;
 
     private TextView textViewName, textViewImpact;
 
@@ -183,19 +188,15 @@ public class MainActivity extends AppCompatActivity
         if(requestCode == IntentIntegrator.REQUEST_CODE) {
             //retrieve scan result
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
             // if there actually is a result from the scannig activity
             if (scanningResult != null) {
                 String scanContent = scanningResult.getContents(); //barcode number
                 if(scanContent!= null){
-                    //insert intent here
-                    Fragment fragment = new ProductBusinessFragment();
-                    Bundle bundle = new Bundle ();
-                    bundle.putString("barcode num",scanContent);
-                    bundle.putInt("mode",1);
-
+                    //save result here, fragment transaction takes place in OnREsume
+                    barcodeNumber = scanContent;
                 }
                 Toast.makeText(getApplicationContext(), "Hi"+scanContent, Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(getApplicationContext(), "No scan data received :(", Toast.LENGTH_SHORT).show();
 
@@ -330,6 +331,19 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
+
+        if (barcodeNumber!=null){
+            Fragment pdtBizFrag = new ProductBusinessFragment();
+            Bundle bundle = new Bundle ();
+            bundle.putString("barcode num",barcodeNumber);
+            bundle.putInt("mode",1);
+            pdtBizFrag.setArguments(bundle);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container,pdtBizFrag);
+            transaction.commit();
+        }
+
+
 
     }
 }
