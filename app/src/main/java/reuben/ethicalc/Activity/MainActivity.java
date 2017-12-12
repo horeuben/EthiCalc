@@ -49,6 +49,8 @@ import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GetNearbyShopsFragment.OnFragmentInteractionListener,
         NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener,
@@ -134,7 +136,8 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(uid)) {
                     impact = Double.valueOf(dataSnapshot.child(uid).child("Impact").getValue().toString());
-                    textViewImpact.setText(String.valueOf(impact));
+                    DecimalFormat format = new DecimalFormat("##.00");
+                    textViewImpact.setText(String.valueOf(format.format(impact)));
                 }
                 else {
                     mUsersDatabaseReference.child(uid).setValue(new User(user.getDisplayName(),"0","50","50","0","0","0","50","50","50","50"));
