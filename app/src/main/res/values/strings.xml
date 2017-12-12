@@ -164,7 +164,7 @@
     <string name="business_recentnews">Recent News on Company</string>
 
     <!-- For Product Fragment -->
-    <string name="product_name">Lorem Ipsum Donut Bites</string>
+    <string name="product_name">Lorem Ipsum Donut Bites This is a Long Name</string>
     <string name="product_msrp">$4.50</string>
     <string name="product_addtocart">ADD TO SHOPPING CART</string>
 </resources>

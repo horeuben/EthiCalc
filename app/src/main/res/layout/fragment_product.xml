@@ -20,7 +20,8 @@
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/product_textview_msrp"/>
 
     <TextView
         android:id="@+id/product_textview_msrp"
