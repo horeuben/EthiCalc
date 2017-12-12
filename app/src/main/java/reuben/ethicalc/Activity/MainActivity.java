@@ -3,11 +3,6 @@ package reuben.ethicalc.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -42,9 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.Database.User;
-import reuben.ethicalc.Fragment.BlankFragment;
 import reuben.ethicalc.Fragment.BusinessFragment;
 import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
@@ -56,10 +49,8 @@ import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener, GetNearbyShopsFragment.OnFragmentInteractionListener,
         NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener,
         ProductFragment.OnFragmentInteractionListener,BusinessFragment.OnFragmentInteractionListener{
 
