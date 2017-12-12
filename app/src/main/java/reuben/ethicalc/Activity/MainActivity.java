@@ -263,8 +263,6 @@ public class MainActivity extends AppCompatActivity
 
         if(fragment!=null){
             transaction.replace(R.id.fragment_container, fragment);
-            transaction.addToBackStack("backStack");
-            //transaction.replace(R.id.fragment_container,fragment);
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -287,8 +285,6 @@ public class MainActivity extends AppCompatActivity
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container,pdtBizFrag);
-           // transaction.add(pdtBizFrag,"fragment");
-          //  transaction.addToBackStack("backStack");
             transaction.commit();
         }
 
