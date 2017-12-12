@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/selector_background">
+    android:layout_height="match_parent">
 
 
     <ImageView
@@ -18,7 +17,7 @@
         app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 
     <TextView
-        android:id="@+id/business_textview_name"
+        android:id="@+id/impact_textview_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -50,7 +49,7 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/business_imageview_logo"
-        app:layout_constraintTop_toBottomOf="@+id/business_textview_name" />
+        app:layout_constraintTop_toBottomOf="@+id/impact_textview_name" />
 
     <com.github.lzyzsd.circleprogress.ArcProgress
         android:id="@+id/business_progressbar_csr"
@@ -109,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/business_textview_csr" />
 
     <com.github.lzyzsd.circleprogress.ArcProgress
-        android:id="@+id/business_progressbar_environment"
+        android:id="@+id/impact_progressbar_environment"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
@@ -137,8 +136,8 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintStart_toEndOf="@+id/business_progressbar_environment"
-        app:layout_constraintTop_toTopOf="@+id/business_progressbar_environment" />
+        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
+        app:layout_constraintTop_toTopOf="@+id/impact_progressbar_environment" />
 
     <TextView
         android:id="@+id/business_textview_environmentintro"
@@ -156,7 +155,7 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toEndOf="@+id/business_progressbar_environment"
+        app:layout_constraintStart_toEndOf="@+id/impact_progressbar_environment"
         app:layout_constraintTop_toBottomOf="@+id/business_textview_environment" />
 
     <com.github.lzyzsd.circleprogress.ArcProgress

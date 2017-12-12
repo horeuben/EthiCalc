@@ -20,13 +20,26 @@
         android:id="@+id/company_textview_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/company_imageview_logo"
+        app:layout_constraintEnd_toStartOf="@+id/company_textview_csr"
+        app:layout_constraintStart_toEndOf="@+id/company_imageview_logo"
+        app:layout_constraintTop_toTopOf="@+id/company_imageview_logo" />
+
+    <TextView
+        android:id="@+id/company_textview_csr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="50"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/company_imageview_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/company_imageview_logo"
+        app:layout_constraintStart_toEndOf="@+id/company_textview_name"
         app:layout_constraintTop_toTopOf="@+id/company_imageview_logo" />
 </android.support.constraint.ConstraintLayout>

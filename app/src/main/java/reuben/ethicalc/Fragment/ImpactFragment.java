@@ -1,17 +1,36 @@
 package reuben.ethicalc.Fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import reuben.ethicalc.R;
 
@@ -32,6 +51,10 @@ public class ImpactFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FirebaseUser user;
+    private ImageView dp;
+    private TextView name;
 
     private GraphView graph;
 
@@ -73,15 +96,62 @@ public class ImpactFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_impact,container,false);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        dp = (ImageView) rootView.findViewById(R.id.impact_imageview_dp);
+
+        Picasso.with(rootView.getContext()).load(user.getPhotoUrl()).into(dp, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap imageBitmap = ((BitmapDrawable) dp.getDrawable()).getBitmap();
+                        RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                        imageDrawable.setCircular(true);
+                        imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                        dp.setImageDrawable(imageDrawable);
+                    }
+
+                    @Override
+                    public void onError() {
+                        dp.setImageResource(R.drawable.ic_launcher_foreground);
+                    }
+                });
+
+        name = (TextView) rootView.findViewById(R.id.impact_textview_name);
+
+        name.setText(user.getDisplayName());
+
+        Calendar calendar = Calendar.getInstance();
+        Date d1 = calendar.getTime();
+
         graph = (GraphView) rootView.findViewById(R.id.impact_graph_impactdelta);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
+                new DataPoint(graphDateGen(28), 1),
+                new DataPoint(graphDateGen(20), 5),
+                new DataPoint(graphDateGen(13), 3),
+                new DataPoint(graphDateGen(6), 2),
+                new DataPoint(graphDateGen(0), 6),
+                new DataPoint(d1, 9)
         });
+        series.setAnimated(true);
+        series.setColor(Color.parseColor("#ff4081"));
+        series.setDrawDataPoints(true);
+        series.setThickness(8);
+        series.setDataPointsRadius(10);
+
         graph.addSeries(series);
+
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
+
+        graph.getViewport().setMinX(graphDateGen(28).getTime());
+        graph.getViewport().setMaxX(d1.getTime());
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.getGridLabelRenderer().setHumanRounding(false);
+        graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
+        graph.getGridLabelRenderer().setHighlightZeroLines(false);
 
         return rootView;
     }
@@ -123,5 +193,14 @@ public class ImpactFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private Date graphDateGen(int daysBack) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(Calendar.SUNDAY);
+        cal.setTime(new Date());
+        int today = cal.get(Calendar.DAY_OF_WEEK) + daysBack;
+        cal.add(Calendar.DAY_OF_WEEK, -today+Calendar.SUNDAY);
+        return cal.getTime();
     }
 }
