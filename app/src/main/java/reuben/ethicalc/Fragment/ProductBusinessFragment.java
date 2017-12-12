@@ -70,7 +70,6 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "here", Toast.LENGTH_SHORT).show();
         if (getArguments() != null) {
 
             mode = getArguments().getInt(MODE);
@@ -89,7 +88,6 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Toast.makeText(getActivity(), "pdtbiz", Toast.LENGTH_SHORT).show();
         View rootview = inflater.inflate(R.layout.fragment_product_business, container, false);
         companyLinearLayout = rootview.findViewById(R.id.companyLinearLayout);
         pdtLinearLayout = rootview.findViewById(R.id.pdtLinearLayout);
