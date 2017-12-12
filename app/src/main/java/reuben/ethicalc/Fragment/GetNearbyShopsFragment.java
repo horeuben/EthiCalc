@@ -150,7 +150,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                     newloc.setLatitude(Double.valueOf(thisshop.getLat()));
                     double distance = mylocation.distanceTo(newloc);
                     if (distance<1000) {
-                        ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),thisshop.getPicureurl(),distance);
+                        ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),distance);
 
                         ShopClasses.add(newshop);
                     }}

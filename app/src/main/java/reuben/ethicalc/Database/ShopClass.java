@@ -10,13 +10,11 @@ public class ShopClass {
 
     private String name;
     private String description;
-    private String imageurl ;
-    private Bitmap imageBitmap;
+
     double distance;
-    public ShopClass(String name,String description,String url,double distance){
+    public ShopClass(String name,String description,double distance){
         this.name = name;
         this.description = description;
-        this.imageurl = url;
         this.distance = distance;
     }
     public double getDistance() {return distance;}
@@ -26,14 +24,6 @@ public class ShopClass {
     public String getDescription(){
         return description;
     }
-    public String getImageUrl(){
-        return this.imageurl;
-    }
-    public Bitmap getImageBitmap(){
-        return imageBitmap;
-    }
-    public void updateBitmap(Bitmap imageBitmap){
-        this.imageBitmap = imageBitmap;
-    }
+
 }
 
