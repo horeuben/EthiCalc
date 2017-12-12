@@ -12,6 +12,7 @@ public class Product implements Parcelable{
     private String barcode;
     private String MSRP;
     private String companyName;
+    private String CSRRating;
 
     public Product(Parcel in){
         String[] data = new String[4];
@@ -20,13 +21,15 @@ public class Product implements Parcelable{
         this.barcode = data[1];
         this.MSRP = data[2];
         this.companyName = data[3];
+        this.CSRRating = data[4];
     }
     public Product(){}
-    public Product(String productName, String barcode, String MSRP, String companyName) {
+    public Product(String productName, String barcode, String MSRP, String companyName, String CSRRating) {
         this.productName = productName;
         this.barcode = barcode;
         this.MSRP = MSRP;
         this.companyName = companyName;
+        this.CSRRating = CSRRating;
     }
 
     public String getProductName() {
@@ -59,6 +62,14 @@ public class Product implements Parcelable{
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCSRRating() {
+        return CSRRating;
+    }
+
+    public void setCSRRating(String CSRRating) {
+        this.CSRRating = CSRRating;
     }
 
     @Override

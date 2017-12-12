@@ -62,7 +62,7 @@ public class ProductFragment extends Fragment {
         pdtPrice = rootview.findViewById(R.id.product_textview_msrp);
         product = getArguments().getParcelable("product");
         pdtName.setText(product.getProductName());
-        pdtPrice.setText(product.getMSRP());
+        pdtPrice.setText("$" + product.getMSRP());
 
         return rootview;
     }

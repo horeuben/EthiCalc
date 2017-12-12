@@ -3,11 +3,6 @@ package reuben.ethicalc.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -42,9 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.Database.User;
-import reuben.ethicalc.Fragment.BlankFragment;
 import reuben.ethicalc.Fragment.BusinessFragment;
 import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
@@ -56,10 +49,8 @@ import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener, GetNearbyShopsFragment.OnFragmentInteractionListener,
         NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener,
         ProductFragment.OnFragmentInteractionListener,BusinessFragment.OnFragmentInteractionListener{
 
@@ -88,7 +79,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setTitle("News Feed");
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new NewsFeedFragment()).commit();
         //Check location permission for sdk >= 23
         if (Build.VERSION.SDK_INT >= 23) {
 
@@ -271,8 +263,6 @@ public class MainActivity extends AppCompatActivity
 
         if(fragment!=null){
             transaction.replace(R.id.fragment_container, fragment);
-            transaction.addToBackStack("backStack");
-            //transaction.replace(R.id.fragment_container,fragment);
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -285,7 +275,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        
+
         if (barcodeNumber!=null){
             Fragment pdtBizFrag = new ProductBusinessFragment();
             Bundle bundle = new Bundle ();
@@ -294,13 +284,9 @@ public class MainActivity extends AppCompatActivity
             setTitle("Product details");
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            //transaction.replace(R.id.fragment_container,pdtBizFrag);
-            transaction.add(pdtBizFrag,"fragment");
-            transaction.addToBackStack("backStack");
+            transaction.replace(R.id.fragment_container,pdtBizFrag);
             transaction.commit();
         }
-
-
 
     }
 }
