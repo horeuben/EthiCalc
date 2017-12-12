@@ -12,12 +12,11 @@ public class Company {
     public String communityRating;
     public String employeesRating;
     public String governanceRating;
-    public String barcode;
     public String pictureUrl;
     public Company() {
     }
 
-    public Company(String companyName, String companyType, String CSRRating, String environmentRating, String communityRating, String employeesRating, String governanceRating, String barcode, String pictureUrl) {
+    public Company(String companyName, String companyType, String CSRRating, String environmentRating, String communityRating, String employeesRating, String governanceRating, String pictureUrl) {
         this.companyName = companyName;
         this.companyType = companyType;
         this.CSRRating = CSRRating;
@@ -25,7 +24,6 @@ public class Company {
         this.communityRating = communityRating;
         this.employeesRating = employeesRating;
         this.governanceRating = governanceRating;
-        this.barcode = barcode;
         this.pictureUrl = pictureUrl;
     }
 }

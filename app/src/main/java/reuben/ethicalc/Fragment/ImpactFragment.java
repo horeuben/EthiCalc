@@ -3,7 +3,6 @@ package reuben.ethicalc.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,10 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -27,11 +33,10 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import reuben.ethicalc.Database.User;
 import reuben.ethicalc.R;
 
 /**
@@ -52,11 +57,30 @@ public class ImpactFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private FirebaseDatabase mFireBaseDatabase;
+    private DatabaseReference mUsersDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
+
+    private double impact;
+    private double impStart;
+    private double lastOneWeek;
+    private double lastTwoWeek;
+    private double lastThreeWeek;
+    private double lastFourWeek;
+    private double delta;
+    private double accum;
+
     private FirebaseUser user;
     private ImageView dp;
     private TextView name;
 
+    private ArcProgress impactBar;
     private GraphView graph;
+    private TextView impactDeltaText;
+    private TextView trees;
+    private TextView charity;
+    private TextView wages;
+    private TextView waste;
 
     private OnFragmentInteractionListener mListener;
 
@@ -120,38 +144,106 @@ public class ImpactFragment extends Fragment {
 
         name.setText(user.getDisplayName());
 
-        Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime();
-
+        impactBar = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_impact);
         graph = (GraphView) rootView.findViewById(R.id.impact_graph_impactdelta);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(graphDateGen(28), 1),
-                new DataPoint(graphDateGen(20), 5),
-                new DataPoint(graphDateGen(13), 3),
-                new DataPoint(graphDateGen(6), 2),
-                new DataPoint(graphDateGen(0), 6),
-                new DataPoint(d1, 9)
+        impactDeltaText = (TextView) rootView.findViewById(R.id.impact_textview_impactchangevalue);
+        trees = (TextView) rootView.findViewById(R.id.impact_textview_equivtreevalue);
+        charity = (TextView) rootView.findViewById(R.id.impact_textview_equivcharityvalue);
+        wages = (TextView) rootView.findViewById(R.id.impact_textview_equivwagesvalue);
+        waste = (TextView) rootView.findViewById(R.id.impact_textview_equivwastevalue);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        final String uid = mFirebaseAuth.getUid();
+        mFireBaseDatabase = FirebaseDatabase.getInstance();
+        mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mUsersDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(uid)) {
+                    impact = Double.valueOf(dataSnapshot.child(uid).child("Impact").getValue().toString());
+                    impStart = Double.valueOf(dataSnapshot.child(uid).child("ImpStart").getValue().toString());
+                    lastOneWeek = Double.valueOf(dataSnapshot.child(uid).child("last1Week").getValue().toString());
+                    lastTwoWeek = Double.valueOf(dataSnapshot.child(uid).child("last2Week").getValue().toString());
+                    lastThreeWeek = Double.valueOf(dataSnapshot.child(uid).child("last3Week").getValue().toString());
+                    lastFourWeek = Double.valueOf(dataSnapshot.child(uid).child("last4Week").getValue().toString());
+                    delta = Double.valueOf(dataSnapshot.child(uid).child("Delta").getValue().toString());
+                    accum = Double.valueOf(dataSnapshot.child(uid).child("Accum").getValue().toString());
+
+
+                    impactBar.setProgress((int) impact);
+
+                    Calendar calendar = Calendar.getInstance();
+                    Date d1 = calendar.getTime();
+
+                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                            new DataPoint(graphDateGen(28), lastFourWeek),
+                            new DataPoint(graphDateGen(20), lastThreeWeek),
+                            new DataPoint(graphDateGen(13), lastTwoWeek),
+                            new DataPoint(graphDateGen(6), lastOneWeek),
+                            new DataPoint(graphDateGen(0), impStart),
+                            new DataPoint(d1, impact)
+                    });
+                    series.setAnimated(true);
+                    series.setColor(Color.parseColor("#ff4081"));
+                    series.setDrawDataPoints(true);
+                    series.setThickness(8);
+                    series.setDataPointsRadius(10);
+
+                    graph.addSeries(series);
+
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(4);
+
+                    graph.getViewport().setMinX(graphDateGen(28).getTime());
+                    graph.getViewport().setMaxX(d1.getTime());
+                    graph.getViewport().setMinY(0);
+                    graph.getViewport().setMaxY(100);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setYAxisBoundsManual(true);
+
+                    graph.getGridLabelRenderer().setHumanRounding(true);
+                    graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
+                    graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
+                    graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
+                    graph.getGridLabelRenderer().setNumVerticalLabels(5);
+                    graph.getGridLabelRenderer().setHighlightZeroLines(false);
+
+
+                    if (delta >= 0) {
+                        String deltaString = "+" + Double.toString(delta);
+                        impactDeltaText.setText(String.valueOf(deltaString));
+                    }
+                    else {
+                        impactDeltaText.setText(String.valueOf(Double.toString(delta)));
+                    }
+
+
+                    int treesInt = (int) accum/500;
+                    trees.setText(String.valueOf(treesInt));
+
+
+                    int charityInt = (int) accum/200;
+                    charity.setText(String.valueOf(charityInt));
+
+
+                    int wagesInt = (int) accum/400;
+                    wages.setText(String.valueOf(wagesInt));
+
+
+                    int wasteInt = (int) accum/300;
+                    waste.setText(String.valueOf(wasteInt));
+                }
+
+                else {
+                    mUsersDatabaseReference.child(uid).setValue(new User(user.getDisplayName(),"0","50","50","0","0","0","50","50","50","50"));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
-        series.setAnimated(true);
-        series.setColor(Color.parseColor("#ff4081"));
-        series.setDrawDataPoints(true);
-        series.setThickness(8);
-        series.setDataPointsRadius(10);
-
-        graph.addSeries(series);
-
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
-
-        graph.getViewport().setMinX(graphDateGen(28).getTime());
-        graph.getViewport().setMaxX(d1.getTime());
-        graph.getViewport().setXAxisBoundsManual(true);
-
-        graph.getGridLabelRenderer().setHumanRounding(false);
-        graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
-        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
-        graph.getGridLabelRenderer().setHighlightZeroLines(false);
 
         return rootView;
     }
