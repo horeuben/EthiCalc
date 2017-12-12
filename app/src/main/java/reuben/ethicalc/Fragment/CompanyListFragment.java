@@ -53,7 +53,7 @@ public class CompanyListFragment extends Fragment {
     private String mParam2;
     private ListView companyListView;
     private CompanyAdapter companyAdapter; //adapter to be used when listView is instantiated
-    List<Company> companies = new ArrayList<Company>();
+    List<Company> companies;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mCompaniesDatabaseReference;
     private OnFragmentInteractionListener mListener;
@@ -96,6 +96,7 @@ public class CompanyListFragment extends Fragment {
         getActivity().setTitle("Companies");
         View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
         companyListView = (ListView) rootView.findViewById(R.id.companylist_listview);
+        companies = new ArrayList<>();
         //setting up my list view
         companyAdapter = new CompanyAdapter(getActivity(),companies);
         companyListView.setAdapter(companyAdapter);
