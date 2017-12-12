@@ -147,7 +147,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                     Location newloc = new Location("check");
                     newloc.setLongitude(Double.valueOf(thisshop.getLng()));
                     newloc.setLatitude(Double.valueOf(thisshop.getLat()));
-                    double distance = mylocation.distanceTo(newloc);
+                    double distance = mylocation.distanceTo(newloc); //if error occurs here check phone location services
                     if (distance<1000) {
                         ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),distance);
                         ShopClasses.add(newshop);
