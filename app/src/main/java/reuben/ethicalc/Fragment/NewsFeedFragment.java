@@ -96,6 +96,7 @@ public class NewsFeedFragment extends Fragment {
 
         //FOR DEBUGGING Toast.makeText(getActivity(), "fragment", Toast.LENGTH_SHORT).show();
         View rootView = inflater.inflate(R.layout.fragment_news_feed,container,false);
+        getActivity().setTitle("News Feed");
         newsItemListView = (ListView) rootView.findViewById(R.id.newsList);
 //        recyclerView = rootView.findViewById(R.id.recyclerView);
 //        newsItems = new ArrayList<>();

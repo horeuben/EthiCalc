@@ -93,8 +93,8 @@ public class CompanyListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment\
-        getActivity().setTitle("Companies");
         View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
+        getActivity().setTitle("Companies");
         companyListView = (ListView) rootView.findViewById(R.id.companylist_listview);
         companies = new ArrayList<>();
         //setting up my list view
@@ -118,7 +118,6 @@ public class CompanyListFragment extends Fragment {
                     companyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            getActivity().setTitle(companies.get(i).getCompanyName());
                             Fragment fragment = new ProductBusinessFragment();
                             Bundle bundle = new Bundle ();
                             bundle.putParcelable("company",companies.get(i));

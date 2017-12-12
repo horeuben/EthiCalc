@@ -136,7 +136,7 @@ public class ImpactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_impact,container,false);
-
+        getActivity().setTitle("Your Impact");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         dp = (ImageView) rootView.findViewById(R.id.impact_imageview_dp);
