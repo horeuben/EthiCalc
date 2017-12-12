@@ -130,8 +130,8 @@ public class MainActivity2 extends AppCompatActivity  {
 //                mCompaniesDatabaseReference.push().setValue(new Company("Ferrero International", "Food and Beverages", "69", "59", "71", "69", "52", "http://www.springpool.de/wp-content/uploads/2016/09/Logo_Ferrero-512x512.png"));
 //                mCompaniesDatabaseReference.push().setValue(new Company("Nestle", "Food and Beverages", "73", "65", "56", "72", "62", "https://print24.com/de/blog/wp-content/uploads/2009/12/logo8.jpg"));
 //                mCompaniesDatabaseReference.push().setValue(new Company("Fast Retailing Co, Ltd", "Apparel", "44", "52", "47", "44", "41", "https://www.fastretailing.com/employment/images/sns/logo_fr.gif"));
-//                mProductsDatabaseReference.push().setValue(new Product("Nutella 350G Hazelnut-Cocoa Spread", "80177173", "5.90", "Ferrero International"));
-//                mProductsDatabaseReference.push().setValue(new Product("Milo Activ Go 3 IN 1 18 stik pek", "9556001217233", "6.50", "Nestle"));
+                mProductsDatabaseReference.push().setValue(new Product("Nutella 350G Hazelnut-Cocoa Spread", "80177173", "5.90", "Ferrero International", "69"));
+                mProductsDatabaseReference.push().setValue(new Product("Milo Activ Go 3 IN 1 18 stik pek", "9556001217233", "6.50", "Nestle", "73"));
             }
         });
     }

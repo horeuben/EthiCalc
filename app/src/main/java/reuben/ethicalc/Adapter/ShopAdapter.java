@@ -74,7 +74,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
         }
         public void bind(int position){
             shopTextView = (TextView) this.v.findViewById(R.id.text_view_shop);
-            shopImageView = (ImageView) this.v.findViewById(R.id.image_view_shop);
+            //shopImageView = (ImageView) this.v.findViewById(R.id.image_view_shop);
 
             Picasso.with(parentContext).load(data.get(position).getImageUrl()).fit().into(shopImageView);
 
