@@ -1,16 +1,26 @@
 package reuben.ethicalc.Database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by linweili on 11/12/17.
  */
 
-public class Product {
+public class Product implements Parcelable{
     private String productName;
     private String barcode;
     private String MSRP;
     private String companyName;
 
-
+    public Product(Parcel in){
+        String[] data = new String[4];
+        in.readStringArray(data);
+        this.productName = data[0];
+        this.barcode = data[1];
+        this.MSRP = data[2];
+        this.companyName = data[3];
+    }
     public Product(){}
     public Product(String productName, String barcode, String MSRP, String companyName) {
         this.productName = productName;
@@ -50,4 +60,27 @@ public class Product {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeStringArray(new String[] {this.productName,
+                this.barcode,
+                this.MSRP,
+                this.companyName});
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 }

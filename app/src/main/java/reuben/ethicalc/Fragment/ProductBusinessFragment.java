@@ -34,37 +34,31 @@ import reuben.ethicalc.R;
 public class ProductBusinessFragment extends Fragment implements BusinessFragment.OnFragmentInteractionListener,ProductFragment.OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String BARCODE_NUM = "barcode num";
-    private static final String COMPANY_NAME = "company name";
-    private static final String MODE = "mode";
-
-    // TODO: Rename and change types of parameters
-    private String barcodeNumber;
-    private String companyName;
     private int mode;
     private LinearLayout pdtLinearLayout;
     private LinearLayout companyLinearLayout;
     private OnFragmentInteractionListener mListener;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mProductsDatabseReference;
+    private DatabaseReference mCompanyDatebaseReference;
     private Company company;
+    private String barcodeNumber;
+    private Product product;
 
     public ProductBusinessFragment() {
         // Required empty public constructor
     }
 
 
-    public static ProductBusinessFragment newInstance(String barcode, String company, int mode,Company Pcompany) {
+    public static ProductBusinessFragment newInstance(String barcode, int mode,Company company,Product product) {
         ProductBusinessFragment fragment = new ProductBusinessFragment();
         Bundle args = new Bundle();
-        args.putInt(MODE, mode);
+        args.putInt("mode", mode);
         if (mode==1){ //barcoe number
-            args.putString(BARCODE_NUM, barcode);
-
-
+            args.putString("barcode num", barcode);
+            args.putParcelable("product",product);
         } else {
-            args.putString(COMPANY_NAME, company);
-            args.putParcelable("company",Pcompany);
+            args.putParcelable("company",company);
         }
         fragment.setArguments(args);
         return fragment;
@@ -73,19 +67,6 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-            mode = getArguments().getInt(MODE);
-            if (mode==1){ //if there is barcode number no company name
-                barcodeNumber = getArguments().getString(BARCODE_NUM);
-
-            }
-            else{ //if there is company name no barcode number
-                companyName = getArguments().getString(COMPANY_NAME);
-                company = getArguments().getParcelable("company");
-            }
-
-        }
     }
 
     @Override
@@ -95,17 +76,9 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
         View rootview = inflater.inflate(R.layout.fragment_product_business, container, false);
         companyLinearLayout = rootview.findViewById(R.id.companyLinearLayout);
         pdtLinearLayout = rootview.findViewById(R.id.pdtLinearLayout);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        if (mode == 1) {//if got barcode make space for a prodcut fragment
-            Fragment pdtFrag = new ProductFragment();
-            //set arguments for the product
-            Bundle pdtBundle = new Bundle();
-            pdtBundle.putString(BARCODE_NUM,barcodeNumber);
-            pdtFrag.setArguments(pdtBundle);
-            transaction.replace(R.id.pdtLinearLayout, pdtFrag);
-            transaction.commit();
-
-            //get company name from the barcode number
+        mode = getArguments().getInt("mode");
+        if (mode == 1) {
+            barcodeNumber = getArguments().getString("barcode num");
             mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
             mProductsDatabseReference = mFireBaseDatabase.getReference().child("products");
             Query pdtQuery = mProductsDatabseReference.orderByChild("barcode").equalTo(barcodeNumber);
@@ -113,17 +86,37 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-
-                        Product product = dataSnapshot.getValue(Product.class);
-                        companyName = product.getCompanyName();
-                        //commit company name from what i got from firebase
-                        Fragment compFrag = new BusinessFragment();
-                        Bundle compBundle = new Bundle();
-                        compBundle.putString(COMPANY_NAME,companyName);
-                        compFrag.setArguments(compBundle);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.companyLinearLayout, compFrag);
+                        Fragment pdtFrag = new ProductFragment();
+                        product = dataSnapshot.getChildren().iterator().next().getValue(Product.class);
+                        Bundle productBundle = new Bundle();
+                        productBundle.putParcelable("product",product);
+                        pdtFrag.setArguments(productBundle);
+                        transaction.replace(R.id.pdtLinearLayout, pdtFrag);
                         transaction.commit();
+
+                        mCompanyDatebaseReference = mFireBaseDatabase.getReference().child("companies");
+                        Query companyQuery = mCompanyDatebaseReference.orderByChild("companyName").equalTo(product.getCompanyName());
+                        companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    Fragment compFrag = new BusinessFragment();
+                                    company = dataSnapshot.getChildren().iterator().next().getValue(Company.class);
+                                    Bundle companyBundle = new Bundle();
+                                    companyBundle.putParcelable("company",company);
+                                    compFrag.setArguments(companyBundle);
+                                    transaction.replace(R.id.companyLinearLayout, compFrag);
+                                    transaction.commit();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
 
                     }
                 }
@@ -138,6 +131,8 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
 
         else{
             //if mode=0 only have company name no barcode
+            company = getArguments().getParcelable("company");
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment compFrag = new BusinessFragment();
             Bundle compBundle = new Bundle();
             compBundle.putParcelable("company",company);
@@ -145,13 +140,6 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
             transaction.replace(R.id.companyLinearLayout, compFrag);
             transaction.commit();
         }
-
-        //instantiate my linear layouts
-
-
-
-
-
         return rootview;
 
     }

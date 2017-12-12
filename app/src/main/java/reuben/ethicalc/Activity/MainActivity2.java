@@ -139,7 +139,7 @@ public class MainActivity2 extends AppCompatActivity  {
     // we have a textview with a background as image, and we want to create a bitmap through it to share from facebook when using
     public static Bitmap getBitmapFromView(View view) {
         //Define a bitmap with the same size as the view
-        view.getBackground().setAlpha(250);// set transparency of image
+
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
         //Bind a canvas to it
         Canvas canvas = new Canvas(returnedBitmap);
