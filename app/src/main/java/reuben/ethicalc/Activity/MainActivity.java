@@ -37,8 +37,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.Database.User;
 import reuben.ethicalc.Fragment.BusinessFragment;
+import reuben.ethicalc.Fragment.CartFragment;
 import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.Fragment.ImpactFragment;
@@ -49,10 +51,13 @@ import reuben.ethicalc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GetNearbyShopsFragment.OnFragmentInteractionListener,
         NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener, ProductBusinessFragment.OnFragmentInteractionListener,
-        ProductFragment.OnFragmentInteractionListener,BusinessFragment.OnFragmentInteractionListener{
+        ProductFragment.OnFragmentInteractionListener,BusinessFragment.OnFragmentInteractionListener, CartFragment.OnFragmentInteractionListener{
 
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mUsersDatabaseReference;
@@ -60,8 +65,9 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
     private String barcodeNumber;
-
+    public static List<Product> pdtInCart = new ArrayList<Product>();
     private TextView textViewName, textViewImpact;
+    private Button fab;
 
     private double impact;
 
@@ -147,7 +153,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        Button fab = (Button) findViewById(R.id.fab_scanbarcode);
+        fab = (Button) findViewById(R.id.fab_scanbarcode);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,11 +226,14 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             Toast.makeText(getApplicationContext(), "Go to cart activity", Toast.LENGTH_SHORT).show();
-            Intent dummy = new Intent(this, CartActivity.class);
-            startActivity(dummy);
+            setTitle("Shopping Cart");
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = new CartFragment();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
             return true;
         }
 

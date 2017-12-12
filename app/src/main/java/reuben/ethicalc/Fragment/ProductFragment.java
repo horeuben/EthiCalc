@@ -4,13 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.PriorityQueue;
 
+import reuben.ethicalc.Activity.MainActivity;
 import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.R;
 
@@ -30,6 +34,7 @@ public class ProductFragment extends Fragment {
     private TextView pdtPrice;
     private Product product;
     private OnFragmentInteractionListener mListener;
+    private Button addToCart;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -60,9 +65,23 @@ public class ProductFragment extends Fragment {
 
         pdtName = rootview.findViewById(R.id.product_textview_name);
         pdtPrice = rootview.findViewById(R.id.product_textview_msrp);
+        addToCart = rootview.findViewById(R.id.addPdtToCart);
         product = getArguments().getParcelable("product");
         pdtName.setText(product.getProductName());
         pdtPrice.setText("$" + product.getMSRP());
+
+
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.pdtInCart.add(product); //add prodcut to the cart list
+                Toast.makeText(getActivity(), "Added to Shopping Cart", Toast.LENGTH_SHORT).show();
+                for (Product p : MainActivity.pdtInCart){
+                    Log.i("testing",p.getProductName());
+                }
+            }
+        });
+
 
         return rootview;
     }

@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="@+id/product_textview_name" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addPdtToCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
