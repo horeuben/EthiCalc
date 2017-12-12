@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setTitle("News Feed");
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new NewsFeedFragment()).commit();
         //Check location permission for sdk >= 23
         if (Build.VERSION.SDK_INT >= 23) {
 
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        
+
         if (barcodeNumber!=null){
             Fragment pdtBizFrag = new ProductBusinessFragment();
             Bundle bundle = new Bundle ();
@@ -294,13 +295,11 @@ public class MainActivity extends AppCompatActivity
             setTitle("Product details");
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            //transaction.replace(R.id.fragment_container,pdtBizFrag);
-            transaction.add(pdtBizFrag,"fragment");
-            transaction.addToBackStack("backStack");
+            transaction.replace(R.id.fragment_container,pdtBizFrag);
+           // transaction.add(pdtBizFrag,"fragment");
+          //  transaction.addToBackStack("backStack");
             transaction.commit();
         }
-
-
 
     }
 }
