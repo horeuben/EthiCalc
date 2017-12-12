@@ -254,17 +254,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_news_feed) {
             // Handle the camera action
+            setTitle("News Feed");
             fragment = new NewsFeedFragment();
 
-        } else if (id ==R.id.nav_database){
+        } else if (id ==R.id.nav_companies){
+            setTitle("Companies");
           fragment = new CompanyListFragment();
 
         } else if (id == R.id.nav_impact) {
+            setTitle("Your Impact");
             fragment = new ImpactFragment();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_nearbyshops) {
+            setTitle("Nearby shops");
             fragment = new GetNearbyShopsFragment();
 
         } else if (id == R.id.nav_logout) {
