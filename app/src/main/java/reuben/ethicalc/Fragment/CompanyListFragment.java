@@ -101,31 +101,27 @@ public class CompanyListFragment extends Fragment {
         //grab information from firebase
         mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
         mCompaniesDatabaseReference = mFireBaseDatabase.getReference().child("companies");
-        Query companyQuery = mCompaniesDatabaseReference.orderByChild("companyName");
+        final Query companyQuery = mCompaniesDatabaseReference.orderByChild("companyName");
         companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot data: dataSnapshot.getChildren()){
                         Company company = data.getValue(Company.class);
-                        Log.i("adding from database","ADDED");
                         //populate the list that will be attached to my adapter
                         companies.add(company);
-                        //populate list of company names so i can implement my autocomplete
-                        Toast.makeText(getActivity(), company.getCompanyName(), Toast.LENGTH_SHORT).show();
-
                     }
-                    Log.i("adding from database","FINISHED ADDING");
-                    Toast.makeText(getActivity(), String.valueOf(companies.size()), Toast.LENGTH_SHORT).show();
                     companyAdapter.update(companies);
                     companyAdapter.notifyDataSetChanged();
                     companyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            getActivity().setTitle(companies.get(i).getCompanyName());
                             Fragment fragment = new ProductBusinessFragment();
                             Bundle bundle = new Bundle ();
                             bundle.putString("company name",companies.get(i).getCompanyName());
                             bundle.putInt("mode",0);
+                            fragment.setArguments(bundle);
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, fragment);
                             transaction.commit();
@@ -184,9 +180,5 @@ public class CompanyListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
-
-
 
 }
