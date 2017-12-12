@@ -4,9 +4,6 @@ package reuben.ethicalc.Adapter;
  * Created by trying on 6/12/2017.
  */
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import reuben.ethicalc.Activity.Shop_infomation;
 
 import reuben.ethicalc.Database.ShopClass;
 import reuben.ethicalc.R;
@@ -85,7 +81,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
             String shopName = data.get(position).getName();
             double dist = data.get(position).getDistance();
 
-            shopTextView.setText(shopName+"   "+dist);
+            shopTextView.setText(shopName+"     "+Math.round(dist)+"m");
 
         }
 
@@ -95,14 +91,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
             ShopClass thisshop = data.get(clickedPosition);
-            ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(thisshop.getName());
-            arrayList.add(thisshop.getDescription());
+            String companyname = thisshop.getDescription();
+            //Fragment
 
-            Intent intent = new Intent(parentContext,Shop_infomation.class);
-            intent.putExtra("IMAGEURL", thisshop.getImageBitmap());
-            intent.putExtra("shop", arrayList);
-            parentContext.startActivity(intent);
         }
     }
 

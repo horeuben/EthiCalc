@@ -57,10 +57,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-<<<<<<< HEAD
 
-=======
->>>>>>> c9ae3205169e6ffb3300f996594c696ca679eee7
     private OnFragmentInteractionListener mListener;
     public static final String KEY = "Geofence";
     PendingIntent mGeofencePendingIntent;
@@ -121,7 +118,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
 //            initGoogleAPIClient();
             createGeofences(1.334276,103.962793,100,"Changi City Point");//CCP
             createGeofences(1.340628,103.963193,50,"Campus Centre");//campus centre
-            createGeofences(1.342345, 103.962187,100,"one world");
+            //createGeofences(1.342345, 103.962187,100,"one world");
             getGeofencingRequest();
         } else {
             Log.e(TAG, "Your Device doesn't support Google Play Services.");
@@ -156,7 +153,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                     newloc.setLongitude(Double.valueOf(thisshop.getLng()));
                     newloc.setLatitude(Double.valueOf(thisshop.getLat()));
                     double distance = mylocation.distanceTo(newloc);
-                    if (distance<200) {
+                    if (distance<1000) {
                         ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),thisshop.getPicureurl(),distance);
                         ShopClasses.add(newshop);
 
