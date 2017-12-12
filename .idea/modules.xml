@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EthiCalc.iml" filepath="$PROJECT_DIR$/EthiCalc.iml" />
+      <module fileurl="file://C:\Users\ibm\Documents\GitHub\EthiCalcal\EthiCalc.iml" filepath="C:\Users\ibm\Documents\GitHub\EthiCalcal\EthiCalc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EthiCalcal.iml" filepath="$PROJECT_DIR$/EthiCalcal.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

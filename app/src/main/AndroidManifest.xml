@@ -45,15 +45,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:parentActivityName=".Activity.MainActivity"/>
-        <activity
-            android:name=".Activity.ItemInfoActivity"
-            android:label="@string/title_activity_item_info"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity.MainActivity" />
-        </activity>
         <activity android:name=".Activity.CartActivity"
             android:screenOrientation="portrait">
             <meta-data

@@ -222,10 +222,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Go to cart activity", Toast.LENGTH_SHORT).show();
-            Intent dummy = new Intent(this, CartActivity.class);
-            startActivity(dummy);
-            return true;
+            //Toast.makeText(getApplicationContext(), "Go to cart activity", Toast.LENGTH_SHORT).show();
+            //Intent dummy = new Intent(this, CartActivity.class);
+            //startActivity(dummy);
+            //return true;
         }
 
         return super.onOptionsItemSelected(item);

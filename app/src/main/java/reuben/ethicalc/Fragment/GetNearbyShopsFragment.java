@@ -72,7 +72,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     public static final String TAG = "Rafaela";
     LocationRequest mLocationRequest;
     double currentLatitude = 8.5565795, currentLongitude = 76.8810227;
-    ArrayList<ShopClass> ShopClasses = new ArrayList<>();
+    ArrayList<ShopClass> ShopClasses ;
     private ShopAdapter mshopAdapter;
     Location mylocation;
     public GetNearbyShopsFragment() {
@@ -122,6 +122,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         } else {
             Log.e(TAG, "Your Device doesn't support Google Play Services.");
         }
+        ShopClasses = new ArrayList<>();
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(1000)
@@ -182,8 +183,10 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                                             fragment.setArguments(bundle);
 
                                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                            transaction.replace(R.id.companyLinearLayout, fragment);
+                                            transaction.replace(R.id.fragment_container, fragment);
+                                            transaction.addToBackStack("");
                                             transaction.commit();
+
                                         }
                                     }
                                 }
