@@ -26,4 +26,16 @@ public class Company {
         this.governanceRating = governanceRating;
         this.pictureUrl = pictureUrl;
     }
+
+    public String getCompanyName(){
+        return this.companyName;
+    }
+
+    public String getCSRRating(){
+        return this.CSRRating;
+    }
+
+    public String getPictureUrl(){
+        return this.pictureUrl;
+    }
 }

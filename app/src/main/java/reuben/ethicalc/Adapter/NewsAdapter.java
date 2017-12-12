@@ -59,6 +59,8 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         viewHolder.articleName.setText(newsItem.getNewsTitle());
         Picasso.with(context)
                 .load(newsItem.getImageURL())
+                .placeholder(R.drawable.layout_buttongradient)
+                .fit()
                 .into(viewHolder.articleImg);
 
         return convertView;

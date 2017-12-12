@@ -38,6 +38,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import reuben.ethicalc.Fragment.BlankFragment;
+import reuben.ethicalc.Fragment.CompanyListFragment;
 import reuben.ethicalc.Fragment.GetNearbyShopsFragment;
 import reuben.ethicalc.Fragment.ImpactFragment;
 import reuben.ethicalc.Fragment.NewsFeedFragment;
@@ -46,7 +47,8 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener,GetNearbyShopsFragment.OnFragmentInteractionListener,
+        NewsFeedFragment.OnFragmentInteractionListener,ImpactFragment.OnFragmentInteractionListener,CompanyListFragment.OnFragmentInteractionListener {
     private FirebaseUser user;
     private ImageView imageViewProfilePic, imageViewStarIcon;
 
@@ -217,13 +219,9 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             fragment = new NewsFeedFragment();
 
-        } else if (id == R.id.nav_database) {
+        } else if (id ==R.id.nav_database){
+          fragment = new CompanyListFragment();
 
-
-        } else if (id == R.id.nav_barcode) {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
-            scanIntegrator.setOrientationLocked(false);
-            scanIntegrator.initiateScan();
         } else if (id == R.id.nav_impact) {
             fragment = new ImpactFragment();
 
@@ -281,7 +279,6 @@ public class MainActivity extends AppCompatActivity
 
         if(intent !=null) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
             switch(fragment){
 
                 default:
@@ -292,7 +289,7 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case "Impactfragment":
                     //go to impact fragment;
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ImpactFragment()).commit();
                     navigationView.getMenu().getItem(3).setChecked(true);
                     onNavigationItemSelected(navigationView.getMenu().getItem(3));
                     break;
