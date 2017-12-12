@@ -136,13 +136,11 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         mShopsDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.e("linwei",dataSnapshot.toString());
                 Log.i("checking",String.valueOf(dataSnapshot.getChildrenCount()));
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Shop shop = data.getValue(Shop.class);
                     Allshops.add(shop);
                 }
-
                 for (Shop thisshop : Allshops){
                     String Locationname = thisshop.getShopname();
                     Location newloc = new Location("check");
@@ -151,17 +149,14 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                     double distance = mylocation.distanceTo(newloc);
                     if (distance<1000) {
                         ShopClass newshop = new ShopClass(Locationname,thisshop.getDescription(),distance);
-
                         ShopClasses.add(newshop);
                     }}
                 sort(ShopClasses);
                 mshopAdapter.update(ShopClasses);
                 mshopAdapter.notifyDataSetChanged();
-
                 shopsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Log.i("Inside click!","position"+position);
                         ShopClass thisshop = ShopClasses.get(position);
                         final String companyname = thisshop.getDescription();
                         FirebaseDatabase newFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
@@ -173,9 +168,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                                 if (dataSnapshot.exists()){
                                     for (DataSnapshot data: dataSnapshot.getChildren()){
                                         Company company = data.getValue(Company.class);
-                                        Log.i("Compare",companyname+" in companies"+company.getCompanyName());
                                         if (company.getCompanyName().equals(companyname)){
-                                            Log.i("correct!",companyname);
                                             Fragment fragment = new ProductBusinessFragment();
                                             Bundle bundle = new Bundle ();
                                             bundle.putParcelable("company",company);
@@ -302,7 +295,6 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
                             @Override
                             public void onResult(Status status) {
                                 if (status.isSuccess()) {
-                                    Log.i(TAG, "saved geofence"+mGeofenceList.size()+"now");
 
                                 } else {
                                     Log.e(TAG, "Registering geofence failed: " + status.getStatusMessage() +
@@ -353,10 +345,8 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
     private PendingIntent getGeofencePendingIntent() {
         // Reuse the PendingIntent if we already have it.
         if (mGeofencePendingIntent != null) {
-            Log.i(TAG,"intent has value");
             return mGeofencePendingIntent;
         }
-        Log.i(TAG,"intent=null");
         Intent intent = new Intent(getActivity(), GeofenceTransitionsIntentService.class);
         return PendingIntent.getService(getActivity(), 0, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
@@ -367,20 +357,5 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         currentLatitude = location.getLatitude();
         currentLongitude = location.getLongitude();
     }
-/*
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }*/
 
 }
