@@ -12,12 +12,13 @@ public class Company {
     private String communityRating;
     private String employeesRating;
     private String governanceRating;
-    private String barcode;
     private String pictureUrl;
-    private Company() {
+
+
+    public Company() {
     }
 
-    public Company(String companyName, String companyType, String CSRRating, String environmentRating, String communityRating, String employeesRating, String governanceRating, String barcode, String pictureUrl) {
+    public Company(String companyName, String companyType, String CSRRating, String environmentRating, String communityRating, String employeesRating, String governanceRating, String pictureUrl) {
         this.companyName = companyName;
         this.companyType = companyType;
         this.CSRRating = CSRRating;
@@ -25,7 +26,6 @@ public class Company {
         this.communityRating = communityRating;
         this.employeesRating = employeesRating;
         this.governanceRating = governanceRating;
-        this.barcode = barcode;
         this.pictureUrl = pictureUrl;
     }
 
@@ -83,14 +83,6 @@ public class Company {
 
     public void setGovernanceRating(String governanceRating) {
         this.governanceRating = governanceRating;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
     }
 
     public String getPictureUrl() {
