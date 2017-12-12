@@ -51,6 +51,7 @@ public class NewsFeedFragment extends Fragment {
     private ListView newsItemListView;
     public static NewsAdapter newsItemadapter;
     private OnFragmentInteractionListener mListener;
+    private NewsFeedFragment.AsyncHttpTask asyncHttpTask;
 //    private RecyclerView recyclerView;
 //    private NewsRAdapter newsRAdapter;
 //    private ArrayList<NewsItem> newsItems;
@@ -103,7 +104,8 @@ public class NewsFeedFragment extends Fragment {
 //        recyclerView.setLayoutManager(linearLayoutManager);
 //        newsRAdapter = new NewsRAdapter(newsItems,getActivity());
 //        recyclerView.setAdapter(newsRAdapter);
-        new NewsFeedFragment.AsyncHttpTask().execute();
+        asyncHttpTask = new NewsFeedFragment.AsyncHttpTask();
+        asyncHttpTask.execute();
 
         return rootView;
     }
@@ -130,6 +132,7 @@ public class NewsFeedFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        asyncHttpTask.cancel(true);
     }
 
     /**
