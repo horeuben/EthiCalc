@@ -32,12 +32,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -204,24 +206,26 @@ public class ImpactFragment extends Fragment {
                     series.setThickness(8);
                     series.setDataPointsRadius(10);
 
-                    graph.addSeries(series);
-
-                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                    graph.getGridLabelRenderer().setNumHorizontalLabels(4);
-
+                    graph.getViewport().setXAxisBoundsManual(true);
                     graph.getViewport().setMinX(graphDateGen(28).getTime());
                     graph.getViewport().setMaxX(d1.getTime());
+
+                    graph.getViewport().setYAxisBoundsManual(true);
                     graph.getViewport().setMinY(0);
                     graph.getViewport().setMaxY(100);
-                    graph.getViewport().setXAxisBoundsManual(true);
-                    graph.getViewport().setYAxisBoundsManual(true);
 
-                    graph.getGridLabelRenderer().setHumanRounding(true);
+                    graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
                     graph.getGridLabelRenderer().setGridColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setVerticalLabelsColor(Color.parseColor("#00A5A1"));
                     graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.parseColor("#00A5A1"));
-                    graph.getGridLabelRenderer().setNumVerticalLabels(5);
-                    graph.getGridLabelRenderer().setHighlightZeroLines(false);
+                    graph.getGridLabelRenderer().setHumanRounding(false);
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+                    graph.getGridLabelRenderer().setNumVerticalLabels(10);
+
+                    graph.getGridLabelRenderer().setVerticalLabelsVisible(true);
+                    graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+
+                    graph.addSeries(series);
 
 
                     if (delta >= 0) {
