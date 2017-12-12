@@ -46,16 +46,16 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
 
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.news_item, parent, false);
+            convertView = inflater.inflate(R.layout.company_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.companyLogo = (ImageView) convertView.findViewById(R.id.companyImgViewLogo);
             viewHolder.companyName = (TextView) convertView.findViewById(R.id.companyTextVName);
-            viewHolder.companyCSR = (TextView) convertView.findViewById(R.id.companyTextVCSRsr);
+            viewHolder.companyCSR = (TextView) convertView.findViewById(R.id.companyTextVCSR);
 
             convertView.setTag(viewHolder);
             convertView.setTag(R.id.companyImgViewLogo, viewHolder.companyLogo);
             convertView.setTag(R.id.companyTextVName, viewHolder.companyName);
-            convertView.setTag(R.id.companyTextVCSRsr, viewHolder.companyCSR);
+            convertView.setTag(R.id.companyTextVCSR, viewHolder.companyCSR);
 
 
         } else {
