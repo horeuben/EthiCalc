@@ -109,10 +109,9 @@ public class ProductBusinessFragment extends Fragment implements BusinessFragmen
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        for (DataSnapshot data :dataSnapshot.getChildren()) {
-                            Product product = data.getValue(Product.class);
-                            companyName = product.getCompanyName();
-                        }
+
+                        Product product = dataSnapshot.getValue(Product.class);
+                        companyName = product.getCompanyName();
                         //commit company name from what i got from firebase
                         Fragment compFrag = new BusinessFragment();
                         Bundle compBundle = new Bundle();
