@@ -111,6 +111,7 @@ public class GetNearbyShopsFragment extends Fragment implements LocationListener
         View rootview =  inflater.inflate(R.layout.recycler_view, container, false);
         mGeofenceList = new ArrayList<Geofence>();
 
+        
         int resp = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (resp == ConnectionResult.SUCCESS) {
 
