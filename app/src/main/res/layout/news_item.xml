@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -19,6 +20,7 @@
             android:id="@+id/articleImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:scaleType="centerCrop"
             card_view:srcCompat="@drawable/newsfeedtest" />
 
@@ -27,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/layout_cardviewgradient"
+
             android:fontFamily="sans-serif-condensed"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
@@ -36,7 +39,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:typeface="sans"
             card_view:layout_constraintBottom_toBottomOf="parent"

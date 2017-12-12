@@ -51,7 +51,9 @@ public class NewsFeedFragment extends Fragment {
     private ListView newsItemListView;
     public static NewsAdapter newsItemadapter;
     private OnFragmentInteractionListener mListener;
-
+//    private RecyclerView recyclerView;
+//    private NewsRAdapter newsRAdapter;
+//    private ArrayList<NewsItem> newsItems;
 
 
     public NewsFeedFragment() {
@@ -94,6 +96,13 @@ public class NewsFeedFragment extends Fragment {
         //FOR DEBUGGING Toast.makeText(getActivity(), "fragment", Toast.LENGTH_SHORT).show();
         View rootView = inflater.inflate(R.layout.fragment_news_feed,container,false);
         newsItemListView = (ListView) rootView.findViewById(R.id.newsList);
+//        recyclerView = rootView.findViewById(R.id.recyclerView);
+//        newsItems = new ArrayList<>();
+//        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        newsRAdapter = new NewsRAdapter(newsItems,getActivity());
+//        recyclerView.setAdapter(newsRAdapter);
         new NewsFeedFragment.AsyncHttpTask().execute();
 
         return rootView;
@@ -156,7 +165,7 @@ public class NewsFeedFragment extends Fragment {
                 String response = streamtoString(urlConnection.getInputStream());
                 //I will get a list of NewsItem Objects
                 articleList = parseResult(response);
-
+           //     newsItems = (ArrayList<NewsItem>) parseResult(response);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -178,7 +187,8 @@ public class NewsFeedFragment extends Fragment {
                     startActivity(webIntent);
                 }
             });
-
+//            newsRAdapter.update(newsItems);
+//            newsRAdapter.notifyDataSetChanged();
         }
     }
 
@@ -210,7 +220,9 @@ public class NewsFeedFragment extends Fragment {
             response = new JSONObject(result);
             JSONArray articles = response.optJSONArray("articles");
             //test for first jSON object
-            for (int i=0; i<articles.length();i++){
+            int length = 10;
+            if (articles.length()<10) length = articles.length();
+            for (int i=0; i<length;i++){
                 JSONObject article = articles.optJSONObject(i);
                 String title = article.optString("title");
                 String imageURL = article.optString("urlToImage");
