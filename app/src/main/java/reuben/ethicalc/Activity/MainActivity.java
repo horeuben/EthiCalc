@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_database) {
 
+
         } else if (id == R.id.nav_barcode) {
             IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
             scanIntegrator.setOrientationLocked(false);
@@ -228,6 +229,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
             fragment = new GetNearbyShopsFragment();
+
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -236,7 +238,6 @@ public class MainActivity extends AppCompatActivity
 
         if(fragment!=null){
             transaction.replace(R.id.fragment_container,fragment);
-
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
