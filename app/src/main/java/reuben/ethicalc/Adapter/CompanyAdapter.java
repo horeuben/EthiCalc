@@ -59,7 +59,7 @@ public class CompanyAdapter extends ArrayAdapter<Company> {
 
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.company_item, parent, false);
+            convertView = inflater.inflate(R.layout.cards_layout, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.companyLogo = (ImageView) convertView.findViewById(R.id.companyImgViewLogo);
             viewHolder.companyName = (TextView) convertView.findViewById(R.id.companyTextVName);

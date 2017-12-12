@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="reuben.ethicalc.Fragment.NewsFeedFragment">
+    tools:context="reuben.ethicalc.Fragment.GetNearbyShopsFragment">
     <ListView
-        android:id="@+id/newsList"
+        android:id="@+id/shopsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-</FrameLayout>
+    </FrameLayout>
