@@ -4,6 +4,9 @@ package reuben.ethicalc.Adapter;
  * Created by trying on 6/12/2017.
  */
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import reuben.ethicalc.Database.ShopClass;
+import reuben.ethicalc.Fragment.ProductBusinessFragment;
 import reuben.ethicalc.R;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder> {
@@ -92,7 +96,19 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.shopViewHolder
             int clickedPosition = getAdapterPosition();
             ShopClass thisshop = data.get(clickedPosition);
             String companyname = thisshop.getDescription();
-            //Fragment
+            //Fragment change
+            /*
+            Fragment fragment = new ProductBusinessFragment();
+            Bundle bundle = new Bundle ();
+            bundle.putParcelable("company",companyname);
+            //bundle.putString("company name",companies.get(i).getCompanyName());
+            bundle.putInt("mode",0);
+            fragment.setArguments(bundle);
+            FragmentTransaction transaction = parentContext.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
+            */
+
 
         }
     }
