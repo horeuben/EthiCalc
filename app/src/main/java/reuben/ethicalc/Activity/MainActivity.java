@@ -270,7 +270,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(fragment!=null){
-            transaction.replace(R.id.fragment_container,fragment);
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.addToBackStack("backStack");
+            //transaction.replace(R.id.fragment_container,fragment);
             transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -283,33 +285,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-
-        Intent intent = getIntent();
-        String fragment = "";
-        if (intent.getExtras() != null){
-            fragment = intent.getExtras().getString("fragment");
-            intent.removeExtra("fragment");
-        }
-
-        if(intent !=null) {
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            switch(fragment){
-
-                default:
-                    //change to different fragments
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
-                    navigationView.getMenu().getItem(0).setChecked(true);
-                    onNavigationItemSelected(navigationView.getMenu().getItem(0));
-                    break;
-                case "Impactfragment":
-                    //go to impact fragment;
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ImpactFragment()).commit();
-                    navigationView.getMenu().getItem(3).setChecked(true);
-                    onNavigationItemSelected(navigationView.getMenu().getItem(3));
-                    break;
-            }
-        }
-
+        
         if (barcodeNumber!=null){
             Fragment pdtBizFrag = new ProductBusinessFragment();
             Bundle bundle = new Bundle ();
@@ -318,7 +294,9 @@ public class MainActivity extends AppCompatActivity
             setTitle("Product details");
             pdtBizFrag.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container,pdtBizFrag);
+            //transaction.replace(R.id.fragment_container,pdtBizFrag);
+            transaction.add(pdtBizFrag,"fragment");
+            transaction.addToBackStack("backStack");
             transaction.commit();
         }
 
