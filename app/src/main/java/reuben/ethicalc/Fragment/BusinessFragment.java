@@ -74,7 +74,7 @@ public class BusinessFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_impact,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_business,container,false);
         companyLogo = (ImageView) rootView.findViewById(R.id.business_imageview_logo);
         companyName = (TextView) rootView.findViewById(R.id.impact_textview_name);
         companyType = (TextView) rootView.findViewById(R.id.business_textview_type);
