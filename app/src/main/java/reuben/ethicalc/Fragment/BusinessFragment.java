@@ -1,7 +1,6 @@
 package reuben.ethicalc.Fragment;
 
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,10 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import reuben.ethicalc.Database.Company;
-import reuben.ethicalc.Database.Product;
 import reuben.ethicalc.R;
 
 /**

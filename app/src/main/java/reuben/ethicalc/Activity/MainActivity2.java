@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
@@ -66,8 +68,6 @@ public class MainActivity2 extends AppCompatActivity  {
 
         shareDialog = new ShareDialog(this);
         sharedContent = (TextView) findViewById(R.id.meme);
-        sharedContent.setText("My impact factor is ");
-        sharedContent.setBackground(getResources().getDrawable(R.drawable.pic));
         fbshare = (Button) findViewById(R.id.button_fbshare);
 
         logoutButton = (Button) findViewById(R.id.button_logout);
@@ -77,6 +77,8 @@ public class MainActivity2 extends AppCompatActivity  {
         fbshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sharedContent.setBackground(getResources().getDrawable(R.drawable.share_impact));
+                sharedContent.setText("52");
                 if (ShareDialog.canShow(ShareLinkContent.class)) {
                     Bitmap image = getBitmapFromView(sharedContent);
                     SharePhoto photo = new SharePhoto.Builder()

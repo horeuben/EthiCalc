@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -30,8 +29,6 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -144,7 +141,7 @@ public class ImpactFragment extends Fragment {
 
         name.setText(user.getDisplayName());
 
-        impactBar = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_impact);
+        impactBar = (ArcProgress) rootView.findViewById(R.id.impact_progressbar_environment);
         graph = (GraphView) rootView.findViewById(R.id.impact_graph_impactdelta);
         impactDeltaText = (TextView) rootView.findViewById(R.id.impact_textview_impactchangevalue);
         trees = (TextView) rootView.findViewById(R.id.impact_textview_equivtreevalue);
