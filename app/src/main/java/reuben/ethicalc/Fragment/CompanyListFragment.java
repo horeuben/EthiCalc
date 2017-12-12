@@ -93,6 +93,7 @@ public class CompanyListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment\
+        getActivity().setTitle("Companies");
         View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
         companyListView = (ListView) rootView.findViewById(R.id.companylist_listview);
         //setting up my list view
@@ -125,6 +126,7 @@ public class CompanyListFragment extends Fragment {
                             fragment.setArguments(bundle);
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, fragment);
+                            transaction.addToBackStack("");
                             transaction.commit();
                         }
                     });
