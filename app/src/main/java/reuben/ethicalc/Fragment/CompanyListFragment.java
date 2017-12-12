@@ -119,7 +119,8 @@ public class CompanyListFragment extends Fragment {
                             getActivity().setTitle(companies.get(i).getCompanyName());
                             Fragment fragment = new ProductBusinessFragment();
                             Bundle bundle = new Bundle ();
-                            bundle.putString("company name",companies.get(i).getCompanyName());
+                            bundle.putParcelable("company",companies.get(i));
+                            //bundle.putString("company name",companies.get(i).getCompanyName());
                             bundle.putInt("mode",0);
                             fragment.setArguments(bundle);
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
