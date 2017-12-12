@@ -21,7 +21,6 @@
         android:largeHeap="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity2" />
         <activity android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>

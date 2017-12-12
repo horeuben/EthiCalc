@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
 
             android:scaleType="centerCrop"
-            card_view:srcCompat="@drawable/newsfeedtest" />
+            card_view:srcCompat="drawable/newsfeedtest" />
 
         <TextView
             android:id="@+id/articleTitle"
