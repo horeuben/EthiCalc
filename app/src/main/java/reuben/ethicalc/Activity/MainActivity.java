@@ -219,6 +219,8 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             fragment = new NewsFeedFragment();
 
+        } else if (id ==R.id.nav_database){
+          fragment = new CompanyListFragment();
         } else if (id == R.id.nav_database) {
 
 
@@ -230,7 +232,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new ImpactFragment();
 
         } else if (id == R.id.nav_share) {
-            fragment = new CompanyListFragment();
+            fragment = new GetNearbyShopsFragment();
 
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
