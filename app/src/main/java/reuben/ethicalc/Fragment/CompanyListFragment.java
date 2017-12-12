@@ -103,7 +103,7 @@ public class CompanyListFragment extends Fragment {
         //setting up my list view
 
         //grab information from firebase
-        mFireBaseDatabase = FirebaseDatabase.getInstance();
+        mFireBaseDatabase = FirebaseDatabase.getInstance("https://fir-ethicalc.firebaseio.com/");
         mCompaniesDatabaseReference = mFireBaseDatabase.getReference().child("companies");
         Query companyQuery = mCompaniesDatabaseReference.orderByChild("companyName");
         companyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -112,6 +112,7 @@ public class CompanyListFragment extends Fragment {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot data: dataSnapshot.getChildren()){
                         Company company = data.getValue(Company.class);
+                       //Log.i("adding from database","ADDED");
                         //populate the list that will be attached to my adapter
                         companies.add(company);
                         //populate list of company names so i can implement my autocomplete
@@ -120,12 +121,15 @@ public class CompanyListFragment extends Fragment {
                 }
             }
 
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+       // Log.i("adding from database","FINISHED ADDING");
         companyAdapter = new CompanyAdapter(getActivity(),companies);
+       // Log.i("companies size",String.valueOf(companies.isEmpty()));
         companyListView.setAdapter(companyAdapter);
 
 
